@@ -9,7 +9,7 @@ function executeAsync(camera, box) {
         }
     }, wait);
 }
-aaa
+
 function calculateDistance(obj1, obj2){
     return Math.sqrt(
                     Math.pow((obj1.position.x - obj2.position.x),2) + 
