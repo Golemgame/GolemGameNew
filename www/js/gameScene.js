@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', function(){
         var action = new BABYLON.SwitchBooleanAction(trigger, golem, 'dead');
         box.actionManager.registerAction(action);
         //END ACTION**********
-        
+        bbb
         var metal = new BABYLON.StandardMaterial("metal", scene);
 	    metal.diffuseTexture = new BABYLON.Texture('asset/grunge-metal.jpg', scene);
         box.material = metal;
