@@ -1,0 +1,3 @@
+Map = function(){
+    //Logic map
+}
