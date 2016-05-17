@@ -1,16 +1,19 @@
 function executeAsync(obj1, obj2, ground) {
-    
     setInterval(function(){
         //Enemy si allontana da Golem =================================================
         var distance = calculateDistance(obj1, obj2);
         var dangerRadius = 4;
         if(distance < dangerRadius){
-			var h = ground.getHeightAtCoordinates(enemy.position.x, enemy.position.z);
+			var h = ground.getHeightAtCoordinates(obj2.position.x, obj2.position.z);
             moveAway(obj2, obj1, h);
         }
 		//=============================================================================
 		
+<<<<<<< HEAD
+    }, 50);
+=======
     }, 200);
+>>>>>>> refs/remotes/origin/master
 }
 
 function calculateDistance(obj1, obj2){
@@ -22,7 +25,7 @@ function calculateDistance(obj1, obj2){
 
 function moveAway(obj1, obj2, h){
     var diffX=parseFloat(obj1.position.x - obj2.position.x);
-	var diffY=parseFloat(h - obj1.position.y)
+	var diffY=parseFloat(h - obj1.position.y);
     var diffZ=parseFloat(obj1.position.z - obj2.position.z);
     obj1.moveWithCollisions(new BABYLON.Vector3(diffX, diffY, diffZ).normalize());
 }

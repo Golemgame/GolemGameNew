@@ -1,11 +1,9 @@
-﻿var WORLDMONGER = WORLDMONGER || {};
-
 (function () {
-    WORLDMONGER.WaterMaterial = function (name, scene, light) {
+    WaterMaterial = function (name, scene, light) {
         BABYLON.Material.call(this, name, scene);
         this.light = light;
 
-        this.bumpTexture = new BABYLON.Texture("Shaders/Water/bump.png", scene);
+        this.bumpTexture = new BABYLON.Texture("shader/Water/Bump.png", scene);
         this.bumpTexture.uScale = 2;
         this.bumpTexture.vScale = 2;
         this.bumpTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;
@@ -37,19 +35,19 @@
         this._time = 0;
     };
 
-    WORLDMONGER.WaterMaterial.prototype = Object.create(BABYLON.Material.prototype);
+    WaterMaterial.prototype = Object.create(BABYLON.Material.prototype);
 
     // Properties   
-    WORLDMONGER.WaterMaterial.prototype.needAlphaBlending = function () {
+    WaterMaterial.prototype.needAlphaBlending = function () {
         return false;
     };
 
-    WORLDMONGER.WaterMaterial.prototype.needAlphaTesting = function () {
+    WaterMaterial.prototype.needAlphaTesting = function () {
         return false;
     };
 
     // Methods   
-    WORLDMONGER.WaterMaterial.prototype.getRenderTargetTextures = function () {
+    WaterMaterial.prototype.getRenderTargetTextures = function () {
         var results = [];
 
         results.push(this.reflectionTexture);
@@ -58,14 +56,14 @@
         return results;
     };
 
-    WORLDMONGER.WaterMaterial.prototype.isReady = function (mesh) {
+    WaterMaterial.prototype.isReady = function (mesh) {
         var engine = this._scene.getEngine();
         
         if (this.bumpTexture && !this.bumpTexture.isReady) {
             return false;
         }
 
-        this._effect = engine.createEffect("./Shaders/Water/water",
+        this._effect = engine.createEffect("./shader/Water/water",
             ["position", "normal", "uv"],
             ["worldViewProjection", "world", "view", "vLightPosition", "vEyePosition", "waterColor", "vLevels", "waveData", "windMatrix"],
             ["reflectionSampler", "refractionSampler", "bumpSampler"],
@@ -78,7 +76,7 @@
         return true;
     };
 
-    WORLDMONGER.WaterMaterial.prototype.bind = function (world, mesh) {
+    WaterMaterial.prototype.bind = function (world, mesh) {
         this._time += 0.0001 * this._scene.getAnimationRatio();
 
         this._effect.setMatrix("world", world);
@@ -96,7 +94,7 @@
         this._effect.setTexture("refractionSampler", this.refractionTexture);
     };
 
-    WORLDMONGER.WaterMaterial.prototype.dispose = function () {
+    WaterMaterial.prototype.dispose = function () {
         if (this.bumpTexture) {
             this.bumpTexture.dispose();
         }
