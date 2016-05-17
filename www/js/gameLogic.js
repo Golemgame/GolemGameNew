@@ -1,7 +1,5 @@
 function executeAsync(obj1, obj2, ground) {
-    
     setInterval(function(){
-		time += 0.003;
         //Enemy si allontana da Golem =================================================
         var distance = calculateDistance(obj1, obj2);
         var dangerRadius = 4;
@@ -11,7 +9,7 @@ function executeAsync(obj1, obj2, ground) {
         }
 		//=============================================================================
 		
-    }, 300);
+    }, 50);
 }
 
 function calculateDistance(obj1, obj2){

@@ -3,6 +3,7 @@ var engine;
 var scene;
 var enemy;
 var golem;
+var ground;
 
 
 var startingPoint = function(){
@@ -19,11 +20,12 @@ var startingPoint = function(){
 		
 		
 	//Creazione CAMERA =======================================================================
-	var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -7), scene);
+	var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 20, -7), scene);
 	camera.setTarget(BABYLON.Vector3.Zero());
 	camera.attachControl(canvas, false);
 	camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 	camera.checkCollisions = true;
+	camera.inertia = 0.5;
 	//camera.applyGravity = true;
 	//========================================================================================
 		
@@ -31,6 +33,9 @@ var startingPoint = function(){
 		
 	//Creazione LUCE =========================================================================
 	var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);
+	var d1 = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(1, -1, -2), scene);
+	d1.position = new BABYLON.Vector3(-300,300,600);
+	var shadowGenerator = new BABYLON.ShadowGenerator(2048, d1);
 	var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light1.intensity = 1;
 	//========================================================================================
@@ -64,7 +69,7 @@ var startingPoint = function(){
 	extraGround	.checkCollisions = true;
 				
 	// Shore
-	var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 100, 100, 300, 0, 5, scene, false);
+	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 100, 100, 300, 0, 5, scene, false);
 	var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
 	groundMaterial.diffuseTexture = new BABYLON.Texture("shader/Ground/Rock.jpg", scene);
 	groundMaterial.diffuseTexture.uScale = 6;
@@ -73,6 +78,7 @@ var startingPoint = function(){
 	ground.position.y = -2.0;
 	ground.material = groundMaterial;
 	ground.checkCollisions = true;
+	ground.receiveShadows = true;
 	//========================================================================================
 		
 		
@@ -90,7 +96,12 @@ var startingPoint = function(){
 		
 		
 	//Creazione BOSCO ========================================================================
-	var spriteManagerTrees;
+	var tg;
+	ground.onReady = function(){
+		tg = new TreeGenerator(ground, shadowGenerator);
+	}
+	
+	/*var spriteManagerTrees;
 	ground.onReady = function(){
 		ground.optimize(100);
         spriteManagerTrees = new BABYLON.SpriteManager("treesManager", "asset/palm.png", 200, 800, scene);
@@ -103,9 +114,9 @@ var startingPoint = function(){
             tree.position.z = range / 2 - Math.random() * range;
             tree.position.y = ground.getHeightAtCoordinates(tree.position.x, tree.position.z) + 3;
         }
-	};
+	};*/
 	//========================================================================================
-		
+	
 		
 	//Creazione BORDI ========================================================================
 	var border1;
@@ -151,7 +162,7 @@ var startingPoint = function(){
 		
 	//Creazione GOLEM ========================================================================
 	golem = new Golem(2,scene);
-	golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 2;
+	golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 7;
 	//========================================================================================
         
 		
