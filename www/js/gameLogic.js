@@ -10,7 +10,7 @@ function executeAsync(obj1, obj2, ground) {
         }
 		//=============================================================================
 		
-    }, 300);
+    }, 200);
 }
 
 function calculateDistance(obj1, obj2){

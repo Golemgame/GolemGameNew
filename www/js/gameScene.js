@@ -8,9 +8,9 @@ var golem;
 window.addEventListener('DOMContentLoaded', function(){
     var canvas = document.getElementById('renderCanvas');
     var engine = new BABYLON.Engine(canvas, true);
-	
+   
 	var CameraFollowActor = function(){
-		golem.rotation.y =  4.69 - camera[0].alpha;
+		golem.rotation.y =  -4.69 - camera[0].alpha;
 		camera[0].target.x = parseFloat(golem.position.x);
 		camera[0].target.z = parseFloat(golem.position.z);
 }
@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		
 		//Creazione GROUND =======================================================================
 		//CGFHM(name, mapURL, width, length, minHeight, maxHeight, scene, updatable)
-		ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/heightMap.png", 100, 100, 1, 0, 5, scene, false);
+		ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/heightMap.png", 100, 100, 100, 0, 5, scene, false);
 		
         var grass = new BABYLON.StandardMaterial("grass", scene);
 	    grass.diffuseTexture = new BABYLON.Texture("asset/ground.jpg", scene);
@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		ground.checkCollisions = true;
 		//========================================================================================
 		
-		/*Creazione BOSCO ========================================================================
+		//Creazione BOSCO ========================================================================
 		var spriteManagerTrees;
 		ground.onReady = function(){
 			ground.optimize(100);
@@ -129,6 +129,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		//========================================================================================
 		
 		//Creazione ENEMY ========================================================================
+        
         enemy = BABYLON.Mesh.CreateBox("enemy1", 2, scene);
         enemy.position.y = ground.getHeightAtCoordinates(enemy.position.x, enemy.position.z) + 2;
 		var metal = new BABYLON.StandardMaterial("metal", scene);
@@ -139,7 +140,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		//========================================================================================
 		
         golem = new Golem(1,scene);
-		//golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 0.5; 
+	
         
         //ACTION**********
         enemy.actionManager = new BABYLON.ActionManager(scene);
@@ -160,6 +161,7 @@ window.addEventListener('DOMContentLoaded', function(){
         scene.render();
 		if(scene.isReady && golem){
 			CameraFollowActor();
+            golem.move();
 		}
     });
 
