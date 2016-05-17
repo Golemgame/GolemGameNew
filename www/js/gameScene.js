@@ -1,27 +1,51 @@
-var golem;
+
 var scene;
 var ground;
 var enemy;
+var camera = [];
+var golem;
 
 window.addEventListener('DOMContentLoaded', function(){
     var canvas = document.getElementById('renderCanvas');
     var engine = new BABYLON.Engine(canvas, true);
+	
+	var CameraFollowActor = function(){
+		golem.rotation.y =  4.69 - camera[0].alpha;
+		camera[0].target.x = parseFloat(golem.position.x);
+		camera[0].target.z = parseFloat(golem.position.z);
+}
+	
 
     var createScene = function () {
 		//Creazione SCENA ========================================================================
+		
         scene = new BABYLON.Scene(engine);
         scene.clearColor = new BABYLON.Color3(0, 1, 1);
 		scene.collisionsEnabled = true;
 		scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
+		scene.attachControl();
+		
         //========================================================================================
 		
 		//Creazione CAMERA =======================================================================
-        camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -7), scene);
+        camera[0] = new BABYLON.ArcRotateCamera("CameraBaseRotate", -Math.PI/2, Math.PI/2.2, 12, new BABYLON.Vector3(0, 4.8, 0), scene);
+		
+		//velocità zoom
+		camera[0].wheelPrecision = 15;	
+		// distanza min +zoom
+		camera[0].lowerRadiusLimit = 0.0001;
+		// distanza max -zoom
+		camera[0].upperRadiusLimit = 22;
+		scene.activeCamera = camera[0];
+		camera[0].attachControl(canvas);
+		
+		/*
         camera.setTarget(BABYLON.Vector3.Zero());
         camera.attachControl(canvas, false);
 		camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 		camera.checkCollisions = true;
 		camera.applyGravity = false;
+		*/
 		//========================================================================================
 		
 		//Creazione LUCE =========================================================================
@@ -31,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		
 		//Creazione GROUND =======================================================================
 		//CGFHM(name, mapURL, width, length, minHeight, maxHeight, scene, updatable)
-		ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/heightMap.png", 100, 100, 100, 0, 5, scene, false);
+		ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/heightMap.png", 100, 100, 1, 0, 5, scene, false);
 		
         var grass = new BABYLON.StandardMaterial("grass", scene);
 	    grass.diffuseTexture = new BABYLON.Texture("asset/ground.jpg", scene);
@@ -45,7 +69,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		ground.checkCollisions = true;
 		//========================================================================================
 		
-		//Creazione BOSCO ========================================================================
+		/*Creazione BOSCO ========================================================================
 		var spriteManagerTrees;
 		ground.onReady = function(){
 			ground.optimize(100);
@@ -60,7 +84,7 @@ window.addEventListener('DOMContentLoaded', function(){
             	tree.position.y = ground.getHeightAtCoordinates(tree.position.x, tree.position.z) + 3;
         	}
 		};
-		//========================================================================================
+		//========================================================================================*/
 		
 		//Creazione SKYBOX =======================================================================
 		var skybox = BABYLON.Mesh.CreateBox("skyBox", 150, scene);
@@ -114,8 +138,8 @@ window.addEventListener('DOMContentLoaded', function(){
 		enemy.applyGravity = true;
 		//========================================================================================
 		
-        golem = new Golem(2,scene);
-		golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 2; 
+        golem = new Golem(1,scene);
+		//golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 0.5; 
         
         //ACTION**********
         enemy.actionManager = new BABYLON.ActionManager(scene);
@@ -134,10 +158,13 @@ window.addEventListener('DOMContentLoaded', function(){
 
     engine.runRenderLoop(function(){
         scene.render();
+		if(scene.isReady && golem){
+			CameraFollowActor();
+		}
     });
 
 	
-    executeAsync(golem, enemy, ground);
+    executeAsync(golem , enemy, ground);
 
     window.addEventListener('resize', function(){
         engine.resize();

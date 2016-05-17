@@ -1,7 +1,4 @@
-var aKey = 65;
-var sKey = 83;
-var dKey = 68;
-var wKey = 87;
+
 
 Golem = function(size, scene){
     BABYLON.Mesh.call(this, 'golem', scene);
@@ -9,8 +6,10 @@ Golem = function(size, scene){
     vd.applyToMesh(this, false);
     console.log('creazione');
     this.position.x = 5;
-    this.position.y = 2;
+    this.scaling = new BABYLON.Vector3(1,3,1);
     this.position.z = 1;
+	this.position.y = ground.getHeightAtCoordinates(this.position.x, this.position.z) + 1.5;
+	this.ellipsoid = new BABYLON.Vector3(0.1,3,0.1);
     this.checkCollisions = true;
     
     this.dead = false;
@@ -18,6 +17,12 @@ Golem = function(size, scene){
 
 Golem.prototype = Object.create(BABYLON.Mesh.prototype);
 Golem.prototype.constructor = Golem;
+
+
+var aKey = 65;
+var sKey = 83;
+var dKey = 68;
+var wKey = 87;
 
 var onKeyDown = function(evt) {
 
@@ -37,4 +42,3 @@ BABYLON.Tools.RegisterTopRootEvents([{
     name: "keydown",
     handler: onKeyDown
 }]);
-
