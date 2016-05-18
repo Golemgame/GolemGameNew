@@ -127,7 +127,7 @@ var startingPoint = function(){
 		
 	//Creazione ENEMY ========================================================================
 	enemy = BABYLON.Mesh.CreateBox("enemy1", 2, scene);
-	enemy.position.y = ground.getHeightAtCoordinates(enemy.position.x, enemy.position.z) + 2;
+	enemy.position.y = ground.getHeightAtCoordinates(enemy.position.x, enemy.position.z) + 3;
 	var metal = new BABYLON.StandardMaterial("metal", scene);
 	metal.diffuseTexture = new BABYLON.Texture('asset/grunge-metal.jpg', scene);
 	enemy.material = metal;
