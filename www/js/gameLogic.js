@@ -8,12 +8,7 @@ function executeAsync(obj1, obj2, ground) {
             moveAway(obj2, obj1, h);
         }
 		//=============================================================================
-		
-<<<<<<< HEAD
     }, 50);
-=======
-    }, 200);
->>>>>>> refs/remotes/origin/master
 }
 
 function calculateDistance(obj1, obj2){

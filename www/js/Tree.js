@@ -36,7 +36,7 @@ Tree.prototype.constructor = Tree;
 
 Tree.prototype._init = function(sizeBranch) {
 
-    var vertexData = BABYLON.VertexData.CreateSphere(2,sizeBranch);
+    var vertexData = BABYLON.VertexData.CreateSphere(20,sizeBranch);
     vertexData.applyToMesh(this, false);
 
     var positions = this.getVerticesData(BABYLON.VertexBuffer.PositionKind);

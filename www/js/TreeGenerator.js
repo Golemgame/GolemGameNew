@@ -1,19 +1,19 @@
 TreeGenerator = function(ground, sg) {
-    this.treeNumber = 10;
+    this.treeNumber = 20;
     this._trees = [];
     this.scene = ground.getScene();
 	
 	//dimensioni chioma
-    this.minSizeBranch = 5;
-    this.maxSizeBranch = 10;
+    this.minSizeBranch = 3.5;
+    this.maxSizeBranch = 5;
 	
 	//altezza tronco
-    this.minSizeTrunk = 20;
-    this.maxSizeTrunk = 35;
+    this.minSizeTrunk = 7;
+    this.maxSizeTrunk = 12;
 	
 	//diametro tronco
-    this.minRadius = 1;
-    this.maxRadius = 5;
+    this.minRadius = 0.5;
+    this.maxRadius = 2;
 
     this.sg = sg;	//Shadow Generator
 
@@ -40,15 +40,14 @@ TreeGenerator.prototype.generate = function() {
         sizeTrunk = randomNumber(this.minSizeTrunk,this.maxSizeTrunk);
         radius = randomNumber(this.minRadius,this.maxRadius);
 		//area del bosco
-        x = randomNumber(-30, 30);
-        z = randomNumber(-30, 30);
+        x = randomNumber(-90, 90);
+        z = randomNumber(-90, 90);
 
         var tree = new Tree(size, sizeTrunk, radius, scene, this.sg);
         tree.position.x = x;
         tree.position.z = z;
-		tree.position.y = ground.getHeightAtCoordinates(x,z)+sizeTrunk;
+		tree.position.y = ground.getHeightAtCoordinates(x,z)+sizeTrunk-2;
         this._trees.push(tree);
-		console.log("inserito albero numero: " + i);
     }
 };
 
