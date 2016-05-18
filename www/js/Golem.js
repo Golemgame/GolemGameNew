@@ -1,5 +1,3 @@
-
-
 Golem = function(size, scene){
     
     
