@@ -62,40 +62,28 @@ var startingPoint = function(){
 		
 	//Creazione GROUND =======================================================================
 	// Seafloor
-	var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1000, 1000, 1, scene, false);
+	var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
 	var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
 	extraGroundMaterial.diffuseTexture = new BABYLON.Texture("shader/Ground/Sand.jpg", scene);
 	extraGroundMaterial.diffuseTexture.uScale = 60;
 	extraGroundMaterial.diffuseTexture.vScale = 60;
-	extraGround.position.y = -2.05;
+	extraGround.position.y = -1.05;
 	extraGround.material = extraGroundMaterial;
 	extraGround	.checkCollisions = true;
 				
 	// Shore
-	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 100, 100, 300, 0, 5, scene, false);
+	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 100, 100, 300, 0, 6, scene, false);
 	var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
 	groundMaterial.diffuseTexture = new BABYLON.Texture("shader/Ground/Rock.jpg", scene);
 	groundMaterial.diffuseTexture.uScale = 6;
 	groundMaterial.diffuseTexture.vScale = 6;
 	groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-	ground.position.y = -2.0;
+	ground.position.y = -1.0;
 	ground.material = groundMaterial;
 	ground.checkCollisions = true;
 	ground.receiveShadows = true;
 	//========================================================================================
-		
-		
-	//Creazione ACQUA=========================================================================
-	// Sea
-	BABYLON.Engine.ShadersRepository = "";
-	var water = BABYLON.Mesh.CreateGround("water", 1000, 1000, 1, scene, false);
-	var waterMaterial = new WaterMaterial("water", scene, sun);
-	waterMaterial.refractionTexture.renderList.push(extraGround);
-	waterMaterial.refractionTexture.renderList.push(ground);
-	waterMaterial.reflectionTexture.renderList.push(ground);
-	waterMaterial.reflectionTexture.renderList.push(skybox);
-	water.material = waterMaterial;
-	//========================================================================================
+	
 		
 		
 	//Creazione BOSCO ========================================================================
@@ -109,28 +97,28 @@ var startingPoint = function(){
 	//Creazione BORDI ========================================================================
 	var border1;
 	border1 = BABYLON.Mesh.CreateBox("border0", 1, scene);
-	border1.scaling = new BABYLON.Vector3(1, 1000, 1000);
+	border1.scaling = new BABYLON.Vector3(1, 300, 300);
 	border1.position.x = -500;
 	border1.checkCollisions = true;
 	border1.isVisible = false;
 
 	var border2;
 	border2 = BABYLON.Mesh.CreateBox("border1", 1, scene);
-	border2.scaling = new BABYLON.Vector3(1, 1000, 1000);
+	border2.scaling = new BABYLON.Vector3(1, 300, 300);
 	border2.position.x = 500;
 	border2.checkCollisions = true;
 	border2.isVisible = false;
 
 	var border3;
 	border3 = BABYLON.Mesh.CreateBox("border2", 1, scene);
-	border3.scaling = new BABYLON.Vector3(1000, 1000, 1);
+	border3.scaling = new BABYLON.Vector3(300, 300, 1);
 	border3.position.z = 500;
 	border3.checkCollisions = true;
 	border3.isVisible = false;
 
 	var border4;
 	border4 = BABYLON.Mesh.CreateBox("border3", 1, scene);
-	border4.scaling = new BABYLON.Vector3(1000, 1000, 1);
+	border4.scaling = new BABYLON.Vector3(300, 300, 1);
 	border4.position.z = -500;
 	border4.checkCollisions = true;
 	border4.isVisible = false;
@@ -149,8 +137,23 @@ var startingPoint = function(){
 		
 		
 	//Creazione GOLEM ========================================================================
-	golem = new Golem(1,scene);
-        
+	//golem = new Golem(1,scene);
+	golem = new Golem(1,ground);
+    //========================================================================================
+	
+	//Creazione ACQUA=========================================================================
+	// Sea
+	BABYLON.Engine.ShadersRepository = "";
+	var water = BABYLON.Mesh.CreateGround("water", 120, 120, 1, scene, false);
+	var waterMaterial = new WaterMaterial("water", scene, sun);
+	waterMaterial.refractionTexture.renderList.push(extraGround);
+	waterMaterial.refractionTexture.renderList.push(ground);
+	waterMaterial.refractionTexture.renderList.push(golem);
+	waterMaterial.refractionTexture.renderList.push(enemy);
+	waterMaterial.reflectionTexture.renderList.push(ground);
+	waterMaterial.reflectionTexture.renderList.push(skybox);
+	water.material = waterMaterial;
+	//========================================================================================
 		
 	// INTERACTION ===========================================================================
 	enemy.actionManager = new BABYLON.ActionManager(scene);

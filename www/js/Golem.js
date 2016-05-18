@@ -1,14 +1,15 @@
-Golem = function(size, scene){
+//Golem = function(size, scene){
+Golem = function(size, ground){
     
-    
+	var scene = ground.getScene();
     BABYLON.Mesh.call(this, 'golem', scene);
     var vd = BABYLON.VertexData.CreateBox(size);
     vd.applyToMesh(this, false);
     console.log('creazione');
     this.position.x = 5;
     this.scaling = new BABYLON.Vector3(1,3,1);
-    this.position.z = 1;
-	this.position.y = ground.getHeightAtCoordinates(this.position.x, this.position.z) + 2;
+    this.position.z = 5;
+	this.position.y = ground.getHeightAtCoordinates(this.position.x, this.position.z) + 4;
 	this.ellipsoid = new BABYLON.Vector3(0.1,1,0.1);
     this.checkCollisions = true;
     this.applyGravity = true;
