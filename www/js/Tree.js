@@ -83,7 +83,7 @@ Tree.prototype._init = function(sizeBranch) {
 
     var that = this;
     map.forEach(function(array) {
-        var index, min = -sizeBranch/10, max = sizeBranch/10;
+        var index, min = -sizeBranch/3, max = sizeBranch/3;
         var rx = randomNumber(min,max);
         var ry = randomNumber(min,max);
         var rz = randomNumber(min,max);

@@ -9,7 +9,7 @@ Golem = function(size, ground){
     this.position.x = 7;
     this.scaling = new BABYLON.Vector3(1,3,1);
     this.position.z = 7;
-	this.position.y = ground.getHeightAtCoordinates(this.position.x, this.position.z) + 4;
+	this.position.y = ground.getHeightAtCoordinates(this.position.x, this.position.z) + 3;
 	this.ellipsoid = new BABYLON.Vector3(0.1,1,0.1);
     this.checkCollisions = true;
     this.applyGravity = true;
@@ -59,23 +59,23 @@ Golem.prototype._initMovement = function(){
 };
 
 Golem.prototype.move = function(){
-    var speedCharacter = 8;
-var gravity =0.5;
+    var speed = 1.2;
+	var gravity = 0.5;
     if(golem.forward === true){
-        var forwards = new BABYLON.Vector3(parseFloat(Math.sin(golem.rotation.y)) / speedCharacter, gravity, parseFloat(Math.cos(golem.rotation.y)) / speedCharacter);
+        var forwards = new BABYLON.Vector3(parseFloat(Math.sin(golem.rotation.y)) * speed, gravity, parseFloat(Math.cos(golem.rotation.y)) * speed);
             forwards = forwards.negate();
             golem.moveWithCollisions(forwards);	
     }
     else if (golem.backward === true){
-        var backwards = new BABYLON.Vector3(parseFloat(Math.sin(golem.rotation.y)) / speedCharacter, -gravity, parseFloat(Math.cos(golem.rotation.y)) / speedCharacter);
+        var backwards = new BABYLON.Vector3(parseFloat(Math.sin(golem.rotation.y)) * speed, -gravity, parseFloat(Math.cos(golem.rotation.y)) * speed);
             golem.moveWithCollisions(backwards);      
     }
     else if(golem.left === true){ 
-       var backwards = new BABYLON.Vector3(parseFloat(Math.cos(golem.rotation.y)) / speedCharacter, -gravity, parseFloat(Math.sin(-golem.rotation.y)) / speedCharacter);
+       var backwards = new BABYLON.Vector3(parseFloat(Math.cos(golem.rotation.y)) * speed, -gravity, parseFloat(Math.sin(-golem.rotation.y)) * speed);
         golem.moveWithCollisions(backwards);   
     }
     else if(golem.right === true){
-       var backwards = new BABYLON.Vector3(-parseFloat(Math.cos(golem.rotation.y)) / speedCharacter,-gravity, parseFloat(Math.sin(golem.rotation.y)) / speedCharacter);
+       var backwards = new BABYLON.Vector3(-parseFloat(Math.cos(golem.rotation.y)) * speed,-gravity, parseFloat(Math.sin(golem.rotation.y)) * speed);
      golem.moveWithCollisions(backwards);
     }
 };

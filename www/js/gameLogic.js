@@ -6,7 +6,7 @@ function executeAsync(obj1, obj2, ground) {
 		//follow(obj2, obj1, h, 3);
 		chase(obj2, obj1, h, 9, 3);
         
-    }, 2000);
+    }, 200);
 }
 
 function flee(obj1, obj2, h, radius){
