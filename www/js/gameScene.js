@@ -19,21 +19,25 @@ var startingPoint = function(){
 	scene.attachControl();
 	//========================================================================================
 		
-		
-		
 	//Creazione CAMERA =======================================================================
     camera[0] = new BABYLON.ArcRotateCamera("CameraBaseRotate", -Math.PI/2, Math.PI/2.2, 12, new BABYLON.Vector3(0, 4.8, 0), scene);
 	//velocità zoom
-	camera[0].wheelPrecision = 15;	
+	camera[0 ].wheelPrecision = 15;	
 	// distanza min +zoom
 	camera[0].lowerRadiusLimit = 0.0001;
 	// distanza max -zoom
 	camera[0].upperRadiusLimit = 22;
-	scene.activeCamera = camera[0];
+	scene.activeCameras = camera;
 	camera[0].attachControl(canvas);
 	//========================================================================================	
-		
-		
+    
+    //MiniMap ================================================================================
+    var miniMap = new BABYLON.FreeCamera('miniMap', new BABYLON.Vector3(0, 15, 0), scene);
+	miniMap.viewport = new BABYLON.Viewport(0, 0, 0.3, 0.3);
+	miniMap.rotation.x = Math.PI/2;
+	scene.activeCameras.push(miniMap);
+    //========================================================================================
+    
 	//Creazione LUCE =========================================================================
 	var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);
 	var d1 = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(1, -1, -2), scene);
@@ -42,8 +46,6 @@ var startingPoint = function(){
 	var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light1.intensity = 1;
 	//========================================================================================
-		
-		
 		
 	//Creazione SKYBOX =======================================================================
 	var skybox = BABYLON.Mesh.CreateBox("skyBox", 150, scene);
@@ -57,7 +59,6 @@ var startingPoint = function(){
 	skybox.material = sky;
 	skybox.infiniteDistance = true;
 	//========================================================================================
-		
 		
 		
 	//Creazione GROUND =======================================================================
@@ -84,7 +85,6 @@ var startingPoint = function(){
 	ground.receiveShadows = true;
 	//========================================================================================
 	
-		
 		
 	//Creazione BOSCO ========================================================================
 	var tg;
