@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-babylonjs/sample.zip",
       "projectGuid": "f44f1003-c9f6-4cd6-8783-bae9d9cd3be6",
-      "lastModifiedDate": 1462890643608,
+      "lastModifiedDate": 1463583096618,
       "creationDate": 1462374009747
     },
     "sourceDirectory": "www",
@@ -158,7 +158,7 @@
         "runtime_": "W3C",
         "name_": "WebApp",
         "preferences_": {},
-        "isActive_": true,
+        "isActive_": false,
         "appName_": "GolemGame",
         "appID_": "not.yet.specified",
         "appAccess_": {

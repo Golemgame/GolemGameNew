@@ -63,6 +63,7 @@ var startingPoint = function(){
 	//Creazione GROUND =======================================================================
 	// Seafloor
 	var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
+	extraGround.backFaceCulling = false;
 	var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
 	extraGroundMaterial.diffuseTexture = new BABYLON.Texture("shader/Ground/Sand.jpg", scene);
 	extraGroundMaterial.diffuseTexture.uScale = 60;
@@ -72,7 +73,8 @@ var startingPoint = function(){
 	extraGround	.checkCollisions = true;
 				
 	// Shore
-	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 100, 100, 300, 0, 6, scene, false);
+	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 280, 280, 80, 0, 6, scene, false);
+	ground.backFaceCulling = false;
 	var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
 	groundMaterial.diffuseTexture = new BABYLON.Texture("shader/Ground/Rock.jpg", scene);
 	groundMaterial.diffuseTexture.uScale = 6;
@@ -98,28 +100,28 @@ var startingPoint = function(){
 	var border1;
 	border1 = BABYLON.Mesh.CreateBox("border0", 1, scene);
 	border1.scaling = new BABYLON.Vector3(1, 300, 300);
-	border1.position.x = -500;
+	border1.position.x = -140;
 	border1.checkCollisions = true;
 	border1.isVisible = false;
 
 	var border2;
 	border2 = BABYLON.Mesh.CreateBox("border1", 1, scene);
 	border2.scaling = new BABYLON.Vector3(1, 300, 300);
-	border2.position.x = 500;
+	border2.position.x = 140;
 	border2.checkCollisions = true;
 	border2.isVisible = false;
 
 	var border3;
 	border3 = BABYLON.Mesh.CreateBox("border2", 1, scene);
 	border3.scaling = new BABYLON.Vector3(300, 300, 1);
-	border3.position.z = 500;
+	border3.position.z = 140;
 	border3.checkCollisions = true;
 	border3.isVisible = false;
 
 	var border4;
 	border4 = BABYLON.Mesh.CreateBox("border3", 1, scene);
 	border4.scaling = new BABYLON.Vector3(300, 300, 1);
-	border4.position.z = -500;
+	border4.position.z = -140;
 	border4.checkCollisions = true;
 	border4.isVisible = false;
 	//========================================================================================
@@ -127,7 +129,7 @@ var startingPoint = function(){
 		
 	//Creazione ENEMY ========================================================================
 	enemy = BABYLON.Mesh.CreateBox("enemy1", 2, scene);
-	enemy.position.y = ground.getHeightAtCoordinates(enemy.position.x, enemy.position.z) + 2;
+	enemy.position.y = ground.getHeightAtCoordinates(enemy.position.x, enemy.position.z) + 3;
 	var metal = new BABYLON.StandardMaterial("metal", scene);
 	metal.diffuseTexture = new BABYLON.Texture('asset/grunge-metal.jpg', scene);
 	enemy.material = metal;
@@ -144,7 +146,8 @@ var startingPoint = function(){
 	//Creazione ACQUA=========================================================================
 	// Sea
 	BABYLON.Engine.ShadersRepository = "";
-	var water = BABYLON.Mesh.CreateGround("water", 120, 120, 1, scene, false);
+	var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
+	water.backFaceCulling = false;
 	var waterMaterial = new WaterMaterial("water", scene, sun);
 	waterMaterial.refractionTexture.renderList.push(extraGround);
 	waterMaterial.refractionTexture.renderList.push(ground);
