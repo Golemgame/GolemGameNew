@@ -5,13 +5,14 @@ var camera = [];
 var enemy;
 var golem;
 var ground;
+var mm;
 
 
 var startingPoint = function(){
     canvas = document.getElementById('renderCanvas');
     engine = new BABYLON.Engine(canvas, true);
 
-	//Creazione SCENA ========================================================================
+	//SCENE ==================================================================================
     scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3(0, 1, 1);
 	scene.collisionsEnabled = true;
@@ -19,10 +20,10 @@ var startingPoint = function(){
 	scene.attachControl();
 	//========================================================================================
 		
-	//Creazione CAMERA =======================================================================
+	//CAMERA =================================================================================
     camera[0] = new BABYLON.ArcRotateCamera("CameraBaseRotate", -Math.PI/2, Math.PI/2.2, 12, new BABYLON.Vector3(0, 4.8, 0), scene);
 	//velocità zoom
-	camera[0 ].wheelPrecision = 15;	
+	camera[0].wheelPrecision = 15;	
 	// distanza min +zoom
 	camera[0].lowerRadiusLimit = 0.0001;
 	// distanza max -zoom
@@ -31,14 +32,7 @@ var startingPoint = function(){
 	camera[0].attachControl(canvas);
 	//========================================================================================	
     
-    //MiniMap ================================================================================
-    var miniMap = new BABYLON.FreeCamera('miniMap', new BABYLON.Vector3(0, 15, 0), scene);
-	miniMap.viewport = new BABYLON.Viewport(0, 0, 0.3, 0.3);
-	miniMap.rotation.x = Math.PI/2;
-	scene.activeCameras.push(miniMap);
-    //========================================================================================
-    
-	//Creazione LUCE =========================================================================
+	//LIGHT ==================================================================================
 	var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);
 	var d1 = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(1, -1, -2), scene);
 	d1.position = new BABYLON.Vector3(-300,300,600);
@@ -47,7 +41,7 @@ var startingPoint = function(){
     light1.intensity = 1;
 	//========================================================================================
 		
-	//Creazione SKYBOX =======================================================================
+	//SKYBOX =================================================================================
 	var skybox = BABYLON.Mesh.CreateBox("skyBox", 150, scene);
 	var sky = new BABYLON.StandardMaterial("skyBox", scene);
 	sky.backFaceCulling = false;
@@ -58,10 +52,11 @@ var startingPoint = function(){
 	sky.disableLighting = true;
 	skybox.material = sky;
 	skybox.infiniteDistance = true;
+    skybox.layerMask = 2;
 	//========================================================================================
 		
 		
-	//Creazione GROUND =======================================================================
+	//GROUND =================================================================================
 	// Seafloor
 	var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
 	var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
@@ -70,10 +65,10 @@ var startingPoint = function(){
 	extraGroundMaterial.diffuseTexture.vScale = 60;
 	extraGround.position.y = -1.05;
 	extraGround.material = extraGroundMaterial;
-	extraGround	.checkCollisions = true;
+	extraGround.checkCollisions = true;
 				
 	// Shore
-	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 100, 100, 300, 0, 6, scene, false);
+	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 100, 100, 40, 0, 6, scene, false);
 	var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
 	groundMaterial.diffuseTexture = new BABYLON.Texture("shader/Ground/Rock.jpg", scene);
 	groundMaterial.diffuseTexture.uScale = 6;
@@ -86,7 +81,7 @@ var startingPoint = function(){
 	//========================================================================================
 	
 		
-	//Creazione BOSCO ========================================================================
+	//WOOD ==================================================================================
 	var tg;
 	ground.onReady = function(){
 		tg = new TreeGenerator(ground, shadowGenerator);
@@ -94,38 +89,29 @@ var startingPoint = function(){
 	//========================================================================================
 	
 		
-	//Creazione BORDI ========================================================================
-	var border1;
-	border1 = BABYLON.Mesh.CreateBox("border0", 1, scene);
-	border1.scaling = new BABYLON.Vector3(1, 300, 300);
-	border1.position.x = -500;
-	border1.checkCollisions = true;
-	border1.isVisible = false;
-
-	var border2;
-	border2 = BABYLON.Mesh.CreateBox("border1", 1, scene);
-	border2.scaling = new BABYLON.Vector3(1, 300, 300);
-	border2.position.x = 500;
-	border2.checkCollisions = true;
-	border2.isVisible = false;
-
-	var border3;
-	border3 = BABYLON.Mesh.CreateBox("border2", 1, scene);
-	border3.scaling = new BABYLON.Vector3(300, 300, 1);
-	border3.position.z = 500;
-	border3.checkCollisions = true;
-	border3.isVisible = false;
-
-	var border4;
-	border4 = BABYLON.Mesh.CreateBox("border3", 1, scene);
-	border4.scaling = new BABYLON.Vector3(300, 300, 1);
-	border4.position.z = -500;
-	border4.checkCollisions = true;
-	border4.isVisible = false;
+	//BORDERS ================================================================================
+    var borders = [];
+    
+    for(i = 0; i < 4; i++){
+        borders[i] = BABYLON.Mesh.CreateBox("border"+i, 1, scene);
+        borders[i].checkCollisions = true;
+        borders[i].isVisible = false;
+        
+        if(i<2){
+            borders[i].scaling = new BABYLON.Vector3(1, 300, 300);
+        } else {
+            borders[i].scaling = new BABYLON.Vector3(300, 300, 1);
+        }
+    }
+    
+	borders[0].position.x = -500;
+	borders[1].position.x = 500;
+	borders[2].position.z = 500;
+	borders[3].position.z = -500;
 	//========================================================================================
 		
 		
-	//Creazione ENEMY ========================================================================
+	//ENEMY ==================================================================================
 	enemy = BABYLON.Mesh.CreateBox("enemy1", 2, scene);
 	enemy.position.y = ground.getHeightAtCoordinates(enemy.position.x, enemy.position.z) + 2;
 	var metal = new BABYLON.StandardMaterial("metal", scene);
@@ -136,13 +122,37 @@ var startingPoint = function(){
 	//========================================================================================
 		
 		
-	//Creazione GOLEM ========================================================================
-	//golem = new Golem(1,scene);
+	//GOLEM ==================================================================================
 	golem = new Golem(1,ground);
     //========================================================================================
 	
-	//Creazione ACQUA=========================================================================
-	// Sea
+    //MiniMap ================================================================================
+    mm = new BABYLON.FreeCamera("minimap", new BABYLON.Vector3(0,10,0), scene);
+    mm.layerMask = 1;
+    mm.mode = BABYLON.Camera.ORTHOGRAPHIC_CAMERA;
+    
+    mm.orthoLeft = -20;
+    mm.orthoRight = 20;
+    mm.orthoTop = 20;
+    mm.orthoBottom = -20;
+
+    mm.rotation.x = Math.PI/2;
+
+    var xstart = 0.8,
+        ystart = 0.75;
+    var width = 0.99-xstart,
+        height = 1-ystart;
+
+    mm.viewport = new BABYLON.Viewport(
+        xstart,
+        ystart,
+        width,
+        height
+    );
+    scene.activeCameras.push(mm);
+    //========================================================================================
+    
+	//SEA ====================================================================================
 	BABYLON.Engine.ShadersRepository = "";
 	var water = BABYLON.Mesh.CreateGround("water", 120, 120, 1, scene, false);
 	var waterMaterial = new WaterMaterial("water", scene, sun);
@@ -155,7 +165,7 @@ var startingPoint = function(){
 	water.material = waterMaterial;
 	//========================================================================================
 		
-	// INTERACTION ===========================================================================
+	//INTERACTION ============================================================================
 	enemy.actionManager = new BABYLON.ActionManager(scene);
 	var trigger = {
 		
@@ -166,17 +176,23 @@ var startingPoint = function(){
 	enemy.actionManager.registerAction(action);
 	//========================================================================================
 	
-	
 	var CameraFollowActor = function(){
 		golem.rotation.y =  -4.69 - camera[0].alpha;
 		camera[0].target.x = parseFloat(golem.position.x);
 		camera[0].target.z = parseFloat(golem.position.z);
+	};	
+    
+    var miniMapFollowActor = function(){
+		mm.setTarget(golem.position);
+        mm.position.x = golem.position.x;
+        mm.position.z = golem.position.z;
 	};
 
     engine.runRenderLoop(function(){
         scene.render();
 		if(scene.isReady && golem){
 			CameraFollowActor();
+			miniMapFollowActor();
             golem.move();
 		}
     });
