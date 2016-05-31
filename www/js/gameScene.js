@@ -34,7 +34,7 @@ var startingPoint = function(){
     golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 4;
 	
     //MiniMap ================================================================================
-    miniMap(mm,'miniMap',scene);
+    mm = miniMap(mm,'miniMap',scene);
 		
 	//INTERACTION ============================================================================
 	enemy.actionManager = new BABYLON.ActionManager(scene);
