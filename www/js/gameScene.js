@@ -6,6 +6,7 @@ var enemy;
 var golem;
 var ground;
 var mm;
+var modelGolem;
 
 
 var startingPoint = function(){
@@ -13,6 +14,14 @@ var startingPoint = function(){
     engine = new BABYLON.Engine(canvas, true);
     scene = new BABYLON.Scene(engine);
 
+    BABYLON.SceneLoader.ImportMesh('', './asset/golem/', 'robot.babylon', scene, function (meshes) {
+            modelGolem = meshes[0];
+            modelGolem.isVisible = true;
+            modelGolem.scaling = new BABYLON.Vector3(2,2,2);
+            modelGolem.position = new BABYLON.Vector3(0,13,0);
+            console.log(modelGolem);
+    });
+    
 	initScene(scene);
 		
 	//ENEMY ==================================================================================
@@ -30,9 +39,11 @@ var startingPoint = function(){
 		
 		
 	//GOLEM ==================================================================================
-	golem = new Golem(1,scene);
-    golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 4;
-	
+    if(!typeof modelGolem === undefined){
+        golem = new Golem(1,modelGolem,scene);
+        golem.position.y = ground.getHeightAtCoordinates(golem.position.x, golem.position.z) + 2;
+    }
+
     //MiniMap ================================================================================
     mm = miniMap(mm,'miniMap',scene);
 		

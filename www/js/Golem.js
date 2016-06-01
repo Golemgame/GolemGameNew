@@ -1,7 +1,8 @@
-Golem = function(size, scene){
+Golem = function(size, model, scene){
     
     BABYLON.Mesh.call(this, 'golem', scene);
     var vd = BABYLON.VertexData.CreateBox(size);
+    vd.transform(model);
     vd.applyToMesh(this, false);
     this.position.x = 5;
     this.scaling = new BABYLON.Vector3(1,3,1);
