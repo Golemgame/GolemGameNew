@@ -76,7 +76,7 @@ var startingPoint = function(){
 	ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "asset/HeightMap.png", 280, 280, 80, 0, 6, scene, false);
 	ground.backFaceCulling = false;
 	var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-	groundMaterial.diffuseTexture = new BABYLON.Texture("shader/Ground/Rock.jpg", scene);
+	groundMaterial.diffuseTexture = new BABYLON.Texture("asset/grass/grass4.jpg", scene);
 	groundMaterial.diffuseTexture.uScale = 6;
 	groundMaterial.diffuseTexture.vScale = 6;
 	groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
@@ -153,6 +153,7 @@ var startingPoint = function(){
 	waterMaterial.refractionTexture.renderList.push(ground);
 	waterMaterial.refractionTexture.renderList.push(golem);
 	waterMaterial.refractionTexture.renderList.push(enemy);
+	
 	waterMaterial.reflectionTexture.renderList.push(ground);
 	waterMaterial.reflectionTexture.renderList.push(skybox);
 	water.material = waterMaterial;

@@ -13,7 +13,8 @@ Tree = function(sizeBranch, sizeTrunk, radius, scene, sg) {
     this.position.y = sizeTrunk+sizeBranch/2-2;
 
     var trunk = BABYLON.Mesh.CreateCylinder("trunk", sizeTrunk, radius-2<1?1:radius-2, radius, 7, 2, scene );
-    trunk.parent = this;
+    trunk.checkCollisions = true;
+	trunk.parent = this;
     trunk.position.y = (-sizeBranch/2+2)-sizeTrunk/2;
 
     trunk.material = new BABYLON.StandardMaterial("trunk", scene);
@@ -101,5 +102,6 @@ Tree.prototype._init = function(sizeBranch) {
     BABYLON.VertexData.ComputeNormals(positions, indices, normals);
     this.setVerticesData(BABYLON.VertexBuffer.NormalKind, normals);
     this.convertToFlatShadedMesh();
+	//this.checkCollisions = true;
 
 };
