@@ -1,0 +1,26 @@
+{
+  "name": "pngtoy",
+  "homepage": "https://github.com/epistemex/pngtoy",
+  "authors": [
+    "epistemex <github@epistemex.com>"
+  ],
+  "description": "Loads, parses and decodes PNG files client side. Access to chunks, text, raw bitmap++",
+  "main": "pngtoy.min.js",
+  "keywords": [
+    ""
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "tuts"
+  ],
+  "_release": "e7cd859936",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e7cd859936eed5d03107cef723d879a8e7079b5c"
+  },
+  "_source": "https://github.com/epistemex/pngtoy.git",
+  "_target": "*",
+  "_originalSource": "pngtoy"
+}
