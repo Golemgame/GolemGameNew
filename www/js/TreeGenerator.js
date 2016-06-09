@@ -58,7 +58,7 @@ TreeGenerator.prototype.checkHeight = function(tree, ground, sT) {
 };
 
 TreeGenerator.prototype.randomNumber = function(min, max){
-    if (min == max) {
+    if (min === max) {
     	return (min);
     }
     var random = Math.random();

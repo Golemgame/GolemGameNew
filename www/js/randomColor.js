@@ -35,7 +35,7 @@
     var H,S,B;
 
     // Check if we need to generate multiple colors
-    if (options.count != null) {
+    if (options.count !== null) {
 
       var totalColors = options.count,
           colors = [];
@@ -71,7 +71,7 @@
 
     // Instead of storing red as two seperate ranges,
     // we group them, using negative numbers
-    if (hue < 0) {hue = 360 + hue}
+    if (hue < 0) {hue = 360 + hue;}
 
     return hue;
 
@@ -200,7 +200,7 @@
 
       if (colorDictionary[colorInput]) {
         var color = colorDictionary[colorInput];
-        if (color.hueRange) {return color.hueRange}
+        if (color.hueRange) {return color.hueRange;}
       }
     }
 
@@ -243,7 +243,7 @@
 
     function componentToHex(c) {
         var hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
+        return hex.length === 1 ? "0" + hex : hex;
     }
 
     var hex = "#" + componentToHex(rgb[0]) + componentToHex(rgb[1]) + componentToHex(rgb[2]);
@@ -326,8 +326,8 @@
     // this doesn't work for the values of 0 and 360
     // here's the hacky fix
     var h = hsv[0];
-    if (h === 0) {h = 1}
-    if (h === 360) {h = 359}
+    if (h === 0) {h = 1;}
+    if (h === 360) {h = 359;}
 
     // Rebase the h,s,v values
     h = h/360;
