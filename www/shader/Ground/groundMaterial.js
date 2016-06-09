@@ -5,27 +5,27 @@ var WORLDMONGER = WORLDMONGER || {};
         BABYLON.Material.call(this, name, scene);
         this.light = light;
         
-        this.groundTexture = new BABYLON.Texture("shader/Ground/ground.jpg", scene);
+        this.groundTexture = new BABYLON.Texture("shader/Ground/Ground.jpg", scene);
         this.groundTexture.uScale = 6.0;
         this.groundTexture.vScale = 6.0;
         
-        this.grassTexture = new BABYLON.Texture("shader/Ground/grass.jpg", scene);
+        this.grassTexture = new BABYLON.Texture("shader/Ground/Grass.jpg", scene);
         this.grassTexture.uScale = 6.0;
         this.grassTexture.vScale = 6.0;
 
-        this.snowTexture = new BABYLON.Texture("shader/Ground/snow.jpg", scene);
+        this.snowTexture = new BABYLON.Texture("shader/Ground/Snow.jpg", scene);
         this.snowTexture.uScale = 20.0;
         this.snowTexture.vScale = 20.0;
         
-        this.sandTexture = new BABYLON.Texture("shader/Ground/sand.jpg", scene);
+        this.sandTexture = new BABYLON.Texture("shader/Ground/Sand.jpg", scene);
         this.sandTexture.uScale = 4.0;
         this.sandTexture.vScale = 4.0;
         
-        this.rockTexture = new BABYLON.Texture("shader/Ground/rock.jpg", scene);
+        this.rockTexture = new BABYLON.Texture("shader/Ground/Rock.jpg", scene);
         this.rockTexture.uScale = 15.0;
         this.rockTexture.vScale = 15.0;
         
-        this.blendTexture = new BABYLON.Texture("shader/Ground/blend.png", scene);
+        this.blendTexture = new BABYLON.Texture("shader/Ground/Blend.png", scene);
         this.blendTexture.uOffset = Math.random();
         this.blendTexture.vOffset = Math.random();
         this.blendTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;

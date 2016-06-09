@@ -1,5 +1,5 @@
 TreeGenerator = function(ground, sg) {
-    this.treeNumber = 20;
+    this.treeNumber = 70;
     this._trees = [];
     this.scene = ground.getScene();
 	
@@ -24,29 +24,18 @@ TreeGenerator.prototype.generate = function() {
 
     this.clean();
 
-    var randomNumber = function (min, max) {
-        if (min == max) {
-            return (min);
-        }
-        var random = Math.random();
-        return ((random * (max - min)) + min);
-    };
+    
 
     var size,
         sizeTrunk, x, z, radius;
 
     for (var i = 0; i<this.treeNumber; i++) {
-        size = randomNumber(this.minSizeBranch,this.maxSizeBranch);
-        sizeTrunk = randomNumber(this.minSizeTrunk,this.maxSizeTrunk);
-        radius = randomNumber(this.minRadius,this.maxRadius);
-		//area del bosco
-        x = randomNumber(-90, 90);
-        z = randomNumber(-90, 90);
+        size = this.randomNumber(this.minSizeBranch,this.maxSizeBranch);
+        sizeTrunk = this.randomNumber(this.minSizeTrunk,this.maxSizeTrunk);
+        radius = this.randomNumber(this.minRadius,this.maxRadius);
 
         var tree = new Tree(size, sizeTrunk, radius, scene, this.sg);
-        tree.position.x = x;
-        tree.position.z = z;
-		tree.position.y = ground.getHeightAtCoordinates(x,z)+sizeTrunk-2;
+		this.checkHeight(tree, ground, sizeTrunk);
         this._trees.push(tree);
     }
 };
@@ -57,4 +46,21 @@ TreeGenerator.prototype.clean = function() {
     });
 
     this._trees = [];
+};
+
+TreeGenerator.prototype.checkHeight = function(tree, ground, sT) {
+	do{
+			tree.position.x = this.randomNumber(-130, 130);
+			tree.position.z = this.randomNumber(-130, 130);
+			tree.position.y = ground.getHeightAtCoordinates(tree.position.x, tree.position.z);
+	}while(tree.position.y<0);
+	tree.position.y += sT-0.1;
+};
+
+TreeGenerator.prototype.randomNumber = function(min, max){
+    if (min === max) {
+    	return (min);
+    }
+    var random = Math.random();
+	return ((random * (max - min)) + min);
 };
