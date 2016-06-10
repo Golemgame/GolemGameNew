@@ -1,3 +1,5 @@
+/* global define */
+
 ;(function(root, factory) {
 
   // Support AMD
@@ -35,7 +37,7 @@
     var H,S,B;
 
     // Check if we need to generate multiple colors
-    if (options.count !== null) {
+    if (options.count !== undefined) {
 
       var totalColors = options.count,
           colors = [];

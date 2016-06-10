@@ -1,3 +1,5 @@
+/* global BABYLON */
+
 Tree = function(sizeBranch, sizeTrunk, radius, scene, sg) {
     // Call the super class BABYLON.Mesh
     BABYLON.Mesh.call(this, "tree", scene);
@@ -75,14 +77,14 @@ Tree.prototype._init = function(sizeBranch) {
     }
 
     var randomNumber = function (min, max) {
-        if (min == max) {
+        if (min === max) {
             return (min);
         }
         var random = Math.random();
         return ((random * (max - min)) + min);
     };
 
-    var that = this;
+    //var that = this;
     map.forEach(function(array) {
         var index, min = -sizeBranch/3, max = sizeBranch/3;
         var rx = randomNumber(min,max);
@@ -102,6 +104,5 @@ Tree.prototype._init = function(sizeBranch) {
     BABYLON.VertexData.ComputeNormals(positions, indices, normals);
     this.setVerticesData(BABYLON.VertexBuffer.NormalKind, normals);
     this.convertToFlatShadedMesh();
-	//this.checkCollisions = true;
 
 };
