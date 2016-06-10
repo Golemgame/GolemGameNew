@@ -1,14 +1,19 @@
-/* global BABYLON, golem */
-Golem = function (size, ground) {
+/* global BABYLON, golem, camera */
+Golem = function (size, scene) {
 
-    var scene = ground.getScene();
     BABYLON.Mesh.call(this, 'golem', scene);
     var vd = BABYLON.VertexData.CreateBox(size);
     vd.applyToMesh(this, false);
-    console.log('creazione');
     this.scaling = new BABYLON.Vector3(1, 3, 1);
     this.position.x = 10;
-    this.position.y = ground.getHeightAtCoordinates(this.position.x, this.position.z) + 4;
+    var g = getGround(this.position.x,this.position.z);
+    this.position.y = g.getHeightAtCoordinates(this.position.x, this.position.z) + 4;
+    
+    /*camera adjustment
+    camera[0].position = this.position;
+    camera[0].position.y += 3;
+    camera[0].target = this.position;*/
+    
     this.ellipsoid = new BABYLON.Vector3(0.1, 1, 0.1);
     this.checkCollisions = true;
     this.applyGravity = true;
@@ -70,11 +75,11 @@ Golem.prototype.move = function () {
         golem.moveWithCollisions(backwards);
     }
     else if(golem.left === true){ 
-        var backwards = new BABYLON.Vector3(parseFloat(Math.cos(golem.rotation.y)) * speed, -gravity, parseFloat(Math.sin(-golem.rotation.y)) * speed);
-        golem.moveWithCollisions(backwards);
+        var leftwards = new BABYLON.Vector3(parseFloat(Math.cos(golem.rotation.y)) * speed, -gravity, parseFloat(Math.sin(-golem.rotation.y)) * speed);
+        golem.moveWithCollisions(leftwards);
     }
     else if(golem.right === true){
-       var backwards = new BABYLON.Vector3(-parseFloat(Math.cos(golem.rotation.y)) * speed,-gravity, parseFloat(Math.sin(golem.rotation.y)) * speed);
-        golem.moveWithCollisions(backwards);
+       var rightwards = new BABYLON.Vector3(-parseFloat(Math.cos(golem.rotation.y)) * speed,-gravity, parseFloat(Math.sin(golem.rotation.y)) * speed);
+        golem.moveWithCollisions(rightwards);
     }
 };

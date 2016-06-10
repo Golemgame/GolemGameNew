@@ -1,7 +1,4 @@
 {
   "name": "GolemGameNew",
-  "dependencies": {
-    "pnglib.js": "*",
-    "pngtoy": "*"
-  }
+  "dependencies": {}
 }

@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Golem Game</title>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
-    <style>
-        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }  @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
-        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }           @viewport { user-zoom: fixed ; min-zoom: 100% ; }
-    </style>
-    <link rel="stylesheet" href="css/indexStyle.css" type="text/css">
-    <script src="lib/babylon.2.2.js"></script>
-	<!--<script src="shader/Ground/groundMaterial.js"></script>-->
-    <script src="shader/Water/waterMaterial.js"></script>
-	<script src="js/Tree.js"></script>
-	<script src="js/TreeGenerator.js"></script>
+    <head>
+        <title>Golem Game</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <style>
+            @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }  @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }           @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+        </style>
+        <link rel="stylesheet" href="css/indexStyle.css" type="text/css">
+        <script src="lib/babylon.2.2.js"></script>
+        <script src="shader/Water/waterMaterial.js"></script>
+        <script src="js/Tree.js"></script>
+        <script src="js/TreeGenerator.js"></script>
         <script src="js/EnemyGenerator.js"></script>
-	<!--<script src="js/mapGenerator.js"></script>-->
-	<script src="js/Golem.js"></script>
-    <script src="js/gameLogic.js"></script>
-    <script src="js/gameScene.js"></script>
-	<script src="js/randomColor.js"></script>
-</head>
+        <script src="js/MapGenerator.js"></script>
+        <script src="js/Golem.js"></script>
+        <script src="js/gameLogic.js"></script>
+        <script src="js/gameScene.js"></script>
+        <script src="js/randomColor.js"></script>
+    </head>
 
-<body>
-    <canvas id="renderCanvas"></canvas>
-	<script>
-		window.addEventListener('DOMContentLoaded', startingPoint());
-	</script>
-    <div id="infoDiv"></div>
-</body>
+    <body>
+        <canvas id="renderCanvas"></canvas>
+        <script>
+            window.addEventListener('DOMContentLoaded', startingPoint());
+        </script>
+        <div id="infoDiv"></div>
+    </body>
 </html>
