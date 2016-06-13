@@ -7,8 +7,9 @@ Golem = function (size, scene) {
     this.scaling = new BABYLON.Vector3(1, 3, 1);
     this.position.x = 10;
     var g = getGround(this.position.x,this.position.z);
-    this.position.y = g.getHeightAtCoordinates(this.position.x, this.position.z) + 4;
+    this.position.y = g.getHeightAtCoordinates(this.position.x, this.position.z) + 2;
     
+    console.log("golem creato");
     /*camera adjustment
     camera[0].position = this.position;
     camera[0].position.y += 3;

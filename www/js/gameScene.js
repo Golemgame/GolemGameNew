@@ -33,7 +33,6 @@ var startingPoint = function () {
         water = initWater(skybox, light[0]);
         interactions();
     };
-    console.log(ground.onReady);
     engine.runRenderLoop(function () {
         scene.render();
         if (scene.isReady && golem) {
@@ -124,11 +123,13 @@ function initWater(skybox, sun){
     water.backFaceCulling = false;
     var waterMaterial = new WaterMaterial("water", scene, sun);
     //rifrazioni
-    var tiles = ground.unsortedMap();
+    //var tiles = ground.unsortedMap();
+    /*
     for(var i=0; i<tiles.length; i++){
         waterMaterial.refractionTexture.renderList.push(tiles[i]);
         waterMaterial.reflectionTexture.renderList.push(tiles[i]);
     }
+    */
     waterMaterial.refractionTexture.renderList.push(golem);
     waterMaterial.reflectionTexture.renderList.push(skybox);
     water.material = waterMaterial;
@@ -137,11 +138,12 @@ function initWater(skybox, sun){
 function initLight(){
     var l=[];
     var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);
+    sun.intensity = 0.3;
     var d1 = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(1, -1, -2), scene);
     d1.position = new BABYLON.Vector3(-300, 300, 600);
     var sG = new BABYLON.ShadowGenerator(2048, d1);
     var hemi1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-    hemi1.intensity = 0.5;
+    hemi1.intensity = 0.3;
     l.push(sun);
     l.push(d1);
     l.push(sG);
