@@ -6,18 +6,19 @@ TreeGenerator = function (ground, sg) {
     this.scene = ground.getScene();
 
     //dimensioni chioma
-    this.minSizeBranch = 3.5;
-    this.maxSizeBranch = 5;
+    this.minSizeBranch = 4;
+    this.maxSizeBranch = 6;
 
     //altezza tronco
-    this.minSizeTrunk = 7;
+    this.minSizeTrunk = 8;
     this.maxSizeTrunk = 12;
 
     //diametro tronco
     this.minRadius = 0.5;
     this.maxRadius = 2;
 
-    this.sg = sg;	//Shadow Generator
+    //Shadow Generator
+    this.sg = sg;
 
     this.generate();
 };

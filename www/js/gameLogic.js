@@ -47,8 +47,19 @@ function chase(obj1, obj2, h, radMAX, radMIN) {
 }
 
 function getGround(x,z){
+    //var tiles = ground.tiles;
     var tiles = ground.map.length,
-        mapX, mapY;
+            size = ground.tileSize,
+            mapX,
+            mapY;
+    x += tiles/2*size;
+    x -= signum(x);
+    mapX = Math.floor(x/size);
+        
+    z -= tiles/2*size;
+    z -= signum(z);
+    mapY = Math.abs(Math.ceil(z/size)); //for negative numbers remember to invert .floor w/ .ceil and vice versa
+    /*
     if(tiles%2===0){    //even
         if(x>0){
             mapX = tiles/2+Math.floor(x/100);
@@ -61,11 +72,19 @@ function getGround(x,z){
             mapY = tiles/2+Math.floor(z/100)-1;
         }
     }else if(tiles%2===1){  //odd
-        x = x + tiles*50;
-        z = z + tiles*50;
-        mapX = Math.ceil(x/100)-1;
-        mapY = Math.ceil(z/100)-1;
+        x += tiles/2*size;
+        x -= signum(x);
+        mapX = Math.floor(x/size);
+        
+        z -= tiles/2*size;
+        z += signum(z);
+        mapY = Math.floor(z/size);
     }
+    */
     var row = ground.map[mapX];
     return row[mapY];
+}
+
+function signum(n){
+    return (n/Math.abs(n));
 }
