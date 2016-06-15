@@ -49,6 +49,9 @@ var startingPoint = function () {
 function initScene(scene){
     scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3(0, 1, 1);
+    scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+    scene.fogDensity = 0.01;
+    scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
     //scene.workerCollisions = true;
     scene.collisionsEnabled = true;
     scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
