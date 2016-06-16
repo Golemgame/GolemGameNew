@@ -1,52 +1,74 @@
 /* global BABYLON, document, window */
 var canvas,
-    engine,
-    scene,
-    camera  = [],
-    enemy,
-    golem,
-    ground;
-
+        engine,
+        scene,
+        camera = [],
+        enemy,
+        golem,
+        ground,
+        loader,
+        assets = [];
 
 var startingPoint = function () {
     canvas = document.getElementById('renderCanvas');
     engine = new BABYLON.Engine(canvas, true);
+
     scene = initScene(scene);
     camera = initCamera(camera);
-    
-    var light = [];
-    light = initLight();
-    
+    var light = initLights();
+
+    loader = new BABYLON.AssetsManager(scene);
     ground = new MapGenerator(scene, 3, 100);
-    
-    var tg=[], borders=[], water, skybox;
+
+    loaderTasks();
+
+    var tg = [], borders = [], water, skybox;
     ground.onReady = function () {
         console.log("ground onReady execution");
         skybox = initSkybox(skybox);
         borders = initBorders(borders);
         var tiles = ground.unsortedMap();
-        for(var i=0; i<tiles.length; i++){
+        for (var i = 0; i < tiles.length; i++) {
             tg[i] = new TreeGenerator(tiles[i], light[2]);
         }
-        enemy = new EnemyGenerator(1,ground.sideLength);
-        golem = new Golem(1,scene);
+        enemy = new EnemyGenerator(1, ground.sideLength);
+        //golem = new Golem(1, scene, assets['golem']);
         water = initWater(skybox, light[0]);
-        interactions();
+        //golem.onReady = interactions();
     };
+
+};
+
+function loaderTasks() {
+
+    var golemModel = loader.addMeshTask("golem", "", "asset/golem/", "golem.babylon");
+    golemModel.onSuccess = function (t) {
+        assets[t.name] = {meshes: t.loadedMeshes, skeleton: t.loadedSkeletons};
+        golem = new Golem(1, scene, assets['golem']);
+        golem.onReady = interactions();
+    };
+
+    loader.onFinish = function (tasks) {
+        if (scene.isReady && golem) {
+            runEngine();
+        }
+    };
+    loader.load();
+}
+
+function runEngine() {
     engine.runRenderLoop(function () {
         scene.render();
-        if (scene.isReady && golem) {
-            cameraFollow();
-            golem.move();
-        }
+        cameraFollow();
+        golem.move();
     });
-    
+
     window.addEventListener('resize', function () {
         engine.resize();
     });
-};
+}
 
-function initScene(scene){
+function initScene(scene) {
     scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3(0, 1, 1);
     scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
@@ -58,7 +80,7 @@ function initScene(scene){
     scene.attachControl(canvas);
     return scene;
 }
-function initCamera(camera){
+function initCamera(camera) {
     camera[0] = new BABYLON.ArcRotateCamera("CameraBaseRotate", -Math.PI / 2, Math.PI / 2.2, 12, new BABYLON.Vector3(0, 4.8, 0), scene);
     //velocità zoom
     camera[0].wheelPrecision = 15;
@@ -70,7 +92,7 @@ function initCamera(camera){
     camera[0].attachControl(canvas);
     return camera;
 }
-function initSkybox(skybox){
+function initSkybox(skybox) {
     skybox = BABYLON.Mesh.CreateBox("skyBox", ground.sideLength, scene);
     var sky = new BABYLON.StandardMaterial("skyBox", scene);
     sky.backFaceCulling = false;
@@ -83,20 +105,20 @@ function initSkybox(skybox){
     skybox.infiniteDistance = true;
     return skybox;
 }
-function initBorders(borders){
+function initBorders(borders) {
     var border, sL = ground.sideLength;
     //left border
     border = BABYLON.Mesh.CreateBox("border0", 1, scene);
     border.scaling = new BABYLON.Vector3(1, sL, sL);
-    border.position.x = -sL/2;
+    border.position.x = -sL / 2;
     border.checkCollisions = true;
     border.isVisible = false;
     borders.push(border);
-    
+
     //right border
     border = BABYLON.Mesh.CreateBox("border1", 1, scene);
     border.scaling = new BABYLON.Vector3(1, sL, sL);
-    border.position.x = sL/2;
+    border.position.x = sL / 2;
     border.checkCollisions = true;
     border.isVisible = false;
     borders.push(border);
@@ -104,22 +126,22 @@ function initBorders(borders){
     //front border
     border = BABYLON.Mesh.CreateBox("border2", 1, scene);
     border.scaling = new BABYLON.Vector3(sL, sL, 1);
-    border.position.z = sL/2;
+    border.position.z = sL / 2;
     border.checkCollisions = true;
     border.isVisible = false;
     borders.push(border);
-    
+
     //rear border
     border = BABYLON.Mesh.CreateBox("border3", 1, scene);
     border.scaling = new BABYLON.Vector3(sL, sL, 1);
-    border.position.z = -sL/2;
+    border.position.z = -sL / 2;
     border.checkCollisions = true;
     border.isVisible = false;
     borders.push(border);
-    
+
     return borders;
 }
-function initWater(skybox, sun){
+function initWater(skybox, sun) {
     BABYLON.Engine.ShadersRepository = "";
     var water = BABYLON.Mesh.CreateGround("water", ground.sideLength, ground.sideLength, 1, scene, false);
     //water.position.y = -1;
@@ -128,18 +150,18 @@ function initWater(skybox, sun){
     //rifrazioni
     //var tiles = ground.unsortedMap();
     /*
-    for(var i=0; i<tiles.length; i++){
-        waterMaterial.refractionTexture.renderList.push(tiles[i]);
-        waterMaterial.reflectionTexture.renderList.push(tiles[i]);
-    }
-    */
+     for(var i=0; i<tiles.length; i++){
+     waterMaterial.refractionTexture.renderList.push(tiles[i]);
+     waterMaterial.reflectionTexture.renderList.push(tiles[i]);
+     }
+     */
     waterMaterial.refractionTexture.renderList.push(golem);
     waterMaterial.reflectionTexture.renderList.push(skybox);
     water.material = waterMaterial;
     return water;
 }
-function initLight(){
-    var l=[];
+function initLights() {
+    var l = [];
     var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);
     sun.intensity = 0.3;
     var d1 = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(1, -1, -2), scene);
@@ -153,19 +175,19 @@ function initLight(){
     l.push(hemi1);
     return l;
 }
-function interactions(){
+function interactions() {
     var trigger = {
         trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger,
         parameter: golem
     };
     var action = new BABYLON.SwitchBooleanAction(trigger, golem, 'dead');
-    for(var i=0; i<enemy._enemies.length; i++){
+    for (var i = 0; i < enemy._enemies.length; i++) {
         enemy._enemies[i].actionManager = new BABYLON.ActionManager(scene);
         enemy._enemies[i].actionManager.registerAction(action);
-        executeAsync(golem, enemy._enemies[i]);
+        //moveEnemy(golem, enemy._enemies[i]);
     }
 }
-function cameraFollow(){
+function cameraFollow() {
     golem.rotation.y = -4.69 - camera[0].alpha;
     camera[0].target.x = parseFloat(golem.position.x);
     camera[0].target.z = parseFloat(golem.position.z);

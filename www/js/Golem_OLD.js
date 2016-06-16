@@ -1,22 +1,24 @@
-/* global BABYLON, golem */
-
+/* global BABYLON, golem, camera */
 Golem = function (size, scene, model) {
 
-    // Call super constructor
-    AbstractGolem.call(this, scene);
+    BABYLON.Mesh.call(this, 'golem', scene);
 
-    var _this = this;
-    model.meshes.forEach(function (m) {
-        m.parent = _this;
-        _this.addChildren(m);
-    });
+    var vd = BABYLON.VertexData.CreateBox(size);
+    //vd.transform(model);
+    vd.applyToMesh(this, false);
+    
+    //model.parent = vd;
 
+    //this.scaling = new BABYLON.Vector3(1, 3, 1);
     this.position.x = 10;
     var g = getGround(this.position.x, this.position.z);
     this.position.y = g.getHeightAtCoordinates(this.position.x, this.position.z) + 2;
 
-    // Compute world matrix at first frame
-    this.setReady();
+    console.log("golem creato");
+    /*camera adjustment
+     camera[0].position = this.position;
+     camera[0].position.y += 3;
+     camera[0].target = this.position;*/
 
     this.ellipsoid = new BABYLON.Vector3(0.1, 1, 0.1);
     this.checkCollisions = true;
@@ -31,7 +33,7 @@ Golem = function (size, scene, model) {
 
 };
 
-Golem.prototype = Object.create(AbstractGolem.prototype);
+Golem.prototype = Object.create(BABYLON.Mesh.prototype);
 Golem.prototype.constructor = Golem;
 
 Golem.prototype._initMovement = function () {

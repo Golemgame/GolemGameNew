@@ -1,6 +1,6 @@
 /* global BABYLON, ground */
 
-function executeAsync(obj1, obj2) {
+function moveEnemy(obj1, obj2) {
     setInterval(function () {
         var g = getGround(obj2.position.x, obj2.position.z);
         var h = g.getHeightAtCoordinates(obj2.position.x, obj2.position.z);
