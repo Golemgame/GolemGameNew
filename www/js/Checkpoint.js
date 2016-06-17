@@ -3,7 +3,8 @@ Checkpoint = function(time, countdown){
     this.time = time | 180;
     this.counter = countdown?-1:1;  //if(countdown){this.counter=-1;}else{this.counter=1;}
     this.status = "stop";
-    this.position = new BABYLON.Vector3(13,13,13);//this.setPosition(140);
+    //this.position = new BABYLON.Vector3(13,13,13);//this.setPosition(140);
+    this.position = this.setPosition(140);
     this.prepareMesh();
 };
 
@@ -15,7 +16,7 @@ Checkpoint.prototype.setPosition    = function(radius){
             pZ = randomInt(0,range);
     pZ = pZ%2===1? -max+pZ : max-pZ;   //if(pZ%2===1){pZ = -max+pZ}else{pZ = max-pZ};
     var g = getGround(pX,pZ);
-    pY = g.getHeightAtCoordinates(pX,pZ);
+    pY = g.getHeightAtCoordinates(pX,pZ)+2;
     var position = new BABYLON.Vector3(pX,pY,pZ);
     return position;
 };
