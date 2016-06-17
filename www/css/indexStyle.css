@@ -12,6 +12,14 @@ html, body {
     touch-action: none;
 }
 
+#clock {
+    position: fixed;
+    bottom: 5%;
+    right: 5px;
+    width   : 30%;
+    height  : 10%;
+}
+
 #hearts{
     position: absolute;
     bottom: 20px;
