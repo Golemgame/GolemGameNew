@@ -1,6 +1,7 @@
 /**
  * 
  * This script manage the clock
+ * More info at http://flipclockjs.com/
  */
 $(document).ready(function () {
     var clock;

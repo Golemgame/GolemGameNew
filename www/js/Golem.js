@@ -1,6 +1,6 @@
-/* global BABYLON, golem */
+/* global BABYLON, golem, AbstractGolem */
 
-Golem = function (size, scene, model) {
+Golem = function (scene, model) {
 
     // Call super constructor
     AbstractGolem.call(this, scene);
@@ -17,7 +17,15 @@ Golem = function (size, scene, model) {
 
     // Compute world matrix at first frame
     this.setReady();
+    
+        
+    blip = new BABYLON.Sound("Blip", "asset/sounds/ambient.wav", scene, function () {
+    }, {loop: true, autoplay: true});
 
+    // Sound will now follow the mesh position
+    blip.attachToMesh(this);
+
+    this.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
     this.ellipsoid = new BABYLON.Vector3(0.1, 1, 0.1);
     this.checkCollisions = true;
     this.applyGravity = true;
@@ -28,7 +36,6 @@ Golem = function (size, scene, model) {
     this.right = false;
     this.forward = false;
     this.backward = false;
-
 };
 
 Golem.prototype = Object.create(AbstractGolem.prototype);

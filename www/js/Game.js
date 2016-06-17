@@ -1,11 +1,5 @@
 /* global BABYLON */
 
-//// The function onload is loaded when the DOM has been loaded
-//window.addEventListener("DOMContentLoaded", function() {
-//
-//});
-
-// TODO: Aggiungere il listener
 Game = function (canvasId) {
 
     var canvas = document.getElementById(canvasId);
@@ -14,7 +8,7 @@ Game = function (canvasId) {
     this.assets = [];
     this.scene = null;
     this.score = 0;
-    
+
     // Resize window event
     var _this = this;
     window.addEventListener("resize", function () {
@@ -44,73 +38,7 @@ Game.prototype = {
         // The loader
         var loader = new BABYLON.AssetsManager(this.scene);
 
-        var elf = loader.addMeshTask("elf", "", "./assets/elf/", "elf.babylon");
-        elf.onSuccess = function (t) {
-
-            _this.assets[t.name] = {meshes: t.loadedMeshes, skeleton: t.loadedSkeletons[0]};
-        };
-
-        var snowman = loader.addMeshTask("snowman", "", "./assets/snowman/", "snowman.babylon");
-        snowman.onSuccess = function (t) {
-            // Only one mesh here
-            var snowman = new BABYLON.Mesh("snowman", _this.scene);
-            t.loadedMeshes.forEach(function (m) {
-                m.parent = snowman;
-            });
-            snowman.scaling.scaleInPlace(0.075);
-            snowman.rotation.y = -Math.PI / 2;
-            snowman.setEnabled(false);
-            _this.assets[t.name] = {meshes: snowman};
-        };
-
-        var rockTask = loader.addMeshTask("rock", "", "./assets/rock/", "rochers.babylon");
-        rockTask.onSuccess = function (t) {
-            // Only one mesh here
-            t.loadedMeshes[0].setEnabled(false);
-            t.loadedMeshes[0].convertToFlatShadedMesh();
-            t.loadedMeshes[0].position.y = 0.5;
-            t.loadedMeshes[0].material.subMaterials[0].emissiveColor = BABYLON.Color3.White(); // snow on the rock
-            t.loadedMeshes[0].material.subMaterials[1].diffuseColor = BABYLON.Color3.FromInts(66, 87, 108);
-            _this.assets[t.name] = {meshes: t.loadedMeshes[0]};
-        };
-
-        var bigRockTask = loader.addMeshTask("bigrock", "", "./assets/rock/", "rocher_grand.babylon");
-        bigRockTask.onSuccess = function (t) {
-            // Only one mesh here
-            t.loadedMeshes[0].setEnabled(false);
-            t.loadedMeshes[0].convertToFlatShadedMesh();
-            t.loadedMeshes[0].position.y = 2.8;
-            t.loadedMeshes[0].scaling.y -= 0.25;
-            _this.assets[t.name] = {meshes: t.loadedMeshes[0]};
-        };
-
-        var giftTask = loader.addMeshTask("gift", "", "./assets/gift/", "gift.babylon");
-        giftTask.onSuccess = function (t) {
-            // Only one mesh here
-            t.loadedMeshes[0].setEnabled(false);
-            t.loadedMeshes[0].position.y = 1;
-            t.loadedMeshes[0].material.emissiveTexture = t.loadedMeshes[0].material.diffuseTexture;
-            _this.assets[t.name] = {meshes: t.loadedMeshes[0]};
-        };
-
-        var gateTask = loader.addMeshTask("gate", "", "./assets/gate/", "gate.babylon");
-        gateTask.onSuccess = function (t) {
-            // Only one mesh here
-            t.loadedMeshes[0].setEnabled(false);
-            t.loadedMeshes[0].rotation.y = Math.PI / 2;
-            _this.assets[t.name] = {meshes: t.loadedMeshes[0]};
-        };
-
-        var meshTask = loader.addMeshTask("sapinou", "", "./assets/sapinou/", "sapinou.babylon");
-        meshTask.onSuccess = function (t) {
-            // Only one mesh here
-            t.loadedMeshes[0].setEnabled(false);
-            t.loadedMeshes[0].scaling.scaleInPlace(1);
-
-
-            //t.loadedMeshes[0].material.emissiveTexture = t.loadedMeshes[0].material.diffuseTexture.clone();
-            _this.assets[t.name] = {meshes: t.loadedMeshes[0]};
-        };
+        //Loader task...
 
         loader.onFinish = function (tasks) {
 
@@ -118,16 +46,11 @@ Game.prototype = {
             _this._initGame();
 
             _this.scene.executeWhenReady(function () {
-                $(".ready").show();
-                $(".score").show();
-
                 _this.engine.runRenderLoop(function () {
                     _this.scene.render();
                 });
-
             });
         };
-
         loader.load();
     },
     /**
@@ -208,49 +131,14 @@ Game.prototype = {
 
         var _this = this;
 
-        // LANES
-        this.lanes = new Lanes(this);
-
         // PLAYER
         this.player = new Player(this);
-
-        // SNOW
-        this.snow = this._initParticles();
-
-        // SAPINOUS
-        this.sapinous = new SapinouManager(this);
-        this.sapinous.plant();
 
         // LIGHT
         this.light = this._initShadows();
 
         // OBSTACLES
         this.ob = new ObstacleManager(this);
-
-        // RECYCLE ELEMENTS
-        this.scene.registerBeforeRender(function () {
-            _this.sapinous.recycle();
-            _this.lanes.recycle();
-            _this.ob.recycle();
-        });
-
-        // GIFTS
-        // Check if the player collides with a gift
-        var checkGifts = function () {
-            var gifts = _this.ob.gifts;
-            for (var i = 0; i < gifts.length; i++) {
-                var o = gifts[i];
-                if (_this.player.isCollidingWith(o)) {
-                    _this.addToScore();
-                    // delete gift
-                    o.remove();
-                    gifts.splice(i, 1);
-                    i--;
-                }
-            }
-
-        };
-        this.scene.registerBeforeRender(checkGifts);
 
         // FLOOR
         var floor = BABYLON.Mesh.CreateGround("floor", 1, 1, 1, this.scene);

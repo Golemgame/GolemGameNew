@@ -32,9 +32,7 @@ var startingPoint = function () {
             tg[i] = new TreeGenerator(tiles[i], light[2]);
         }
         enemy = new EnemyGenerator(1, ground.sideLength);
-        //golem = new Golem(1, scene, assets['golem']);
         water = initWater(skybox, light[0]);
-        //golem.onReady = interactions();
     };
 
 };
@@ -44,7 +42,7 @@ function loaderTasks() {
     var golemModel = loader.addMeshTask("golem", "", "asset/golem/", "golem.babylon");
     golemModel.onSuccess = function (t) {
         assets[t.name] = {meshes: t.loadedMeshes, skeleton: t.loadedSkeletons};
-        golem = new Golem(1, scene, assets['golem']);
+        golem = new Golem(scene, assets['golem']);
         golem.onReady = interactions();
     };
 
@@ -78,6 +76,7 @@ function initScene(scene) {
     scene.collisionsEnabled = true;
     scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
     scene.attachControl(canvas);
+
     return scene;
 }
 function initCamera(camera) {
@@ -90,6 +89,7 @@ function initCamera(camera) {
     camera[0].upperRadiusLimit = 50;
     scene.activeCamera = camera[0];
     camera[0].attachControl(canvas);
+
     return camera;
 }
 function initSkybox(skybox) {
