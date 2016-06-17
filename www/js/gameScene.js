@@ -5,7 +5,8 @@ var canvas,
     camera  = [],
     enemy,
     golem,
-    ground;
+    ground,
+    checkpoint;
 
 
 var startingPoint = function () {
@@ -21,7 +22,6 @@ var startingPoint = function () {
     
     var tg=[], borders=[], water, skybox;
     ground.onReady = function () {
-        console.log("ground onReady execution");
         skybox = initSkybox(skybox);
         borders = initBorders(borders);
         var tiles = ground.unsortedMap();
@@ -29,7 +29,8 @@ var startingPoint = function () {
             tg[i] = new TreeGenerator(tiles[i], light[2]);
         }
         enemy = new EnemyGenerator(1,ground.sideLength);
-        golem = new Golem(1,scene);
+        golem = new Golem(2);
+        checkpoint = new Checkpoint();
         water = initWater(skybox, light[0]);
         interactions();
     };
@@ -49,7 +50,7 @@ var startingPoint = function () {
 function initScene(scene){
     scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3(0, 1, 1);
-    //scene.workerCollisions = true;
+    scene.workerCollisions = true;  //move the collisions processing into another thread
     scene.collisionsEnabled = true;
     scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
     scene.attachControl(canvas);
@@ -63,6 +64,7 @@ function initCamera(camera){
     camera[0].lowerRadiusLimit = 0.0001;
     // distanza max -zoom
     camera[0].upperRadiusLimit = 50;
+    camera[0].applyGravity = true;
     scene.activeCamera = camera[0];
     camera[0].attachControl(canvas);
     return camera;
@@ -161,6 +163,12 @@ function interactions(){
         enemy._enemies[i].actionManager.registerAction(action);
         executeAsync(golem, enemy._enemies[i]);
     }
+    checkpoint.intervalCheckWin = setInterval(function(){
+        if(checkpoint.checkWin()){
+            clearInterval(checkpoint.intervalCheckWin);
+            engine.stopRenderLoop();
+        }
+    }, 300);
 }
 function cameraFollow(){
     golem.rotation.y = -4.69 - camera[0].alpha;
