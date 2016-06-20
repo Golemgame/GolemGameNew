@@ -8,15 +8,20 @@ var canvas,
     enemy,
     golem,
     ground,
-    checkpoint;
+    checkpoint,
+    minimap;
 
 var startingPoint = function () {
     canvas = document.getElementById('renderCanvas');
     engine = new BABYLON.Engine(canvas, true);
     scene = initScene(scene);
     loader = new BABYLON.AssetsManager(scene);
-    camera = initCamera(camera);
+    camera = initCamera();
+     minimap = initMap();
     
+    scene.registerBeforeRender(function (){
+        beforeRenderFunction();
+    });
     var light = [];
     light = initLight();
     
@@ -61,6 +66,7 @@ function runEngine() {
     engine.runRenderLoop(function () {
         scene.render();
         cameraFollow();
+        MiniMap();
         golem.move();
     });
 
@@ -81,7 +87,7 @@ function initScene(scene){
     scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
     return scene;
 }
-function initCamera(camera){
+function initCamera(){
     camera[0] = new BABYLON.ArcRotateCamera("CameraBaseRotate", -Math.PI / 2, Math.PI / 2.2, 12, new BABYLON.Vector3(0, 4.8, 0), scene);
     //velocità zoom
     camera[0].wheelPrecision = 15;
@@ -90,9 +96,35 @@ function initCamera(camera){
     // distanza max -zoom
     camera[0].upperRadiusLimit = 50;
     //camera[0].applyGravity = true;
-    scene.activeCamera = camera[0];
+    scene.activeCameras.push(camera[0]);
     camera[0].attachControl(canvas);
     return camera;
+}
+function initMap(){
+     minimap = new BABYLON.FreeCamera("minimap", new BABYLON.Vector3(0, 100, 0), scene);
+    minimap.mode = 1;
+    minimap.layerMask = 1;
+    minimap.orthoLeft = -30 / 2;
+    minimap.orthoRight = 30 / 2;
+    minimap.orthoTop = 30 / 2;
+    minimap.orthoBottom = -30 / 2;
+  
+    
+
+    var xstart = 0.75, // 80% from the left
+            ystart = 0.75; // 75% from the bottom
+    var width = 0.99 - xstart, // Almost until the right edge of the screen
+            height = 1 - ystart;  // Until the top edge of the screen
+
+    minimap.viewport = new BABYLON.Viewport(
+            xstart,
+            ystart,
+            width,
+            height
+            );
+
+    scene.activeCameras.push(minimap);
+    return minimap;
 }
 function initSkybox(skybox){
     skybox = BABYLON.Mesh.CreateBox("skyBox", ground.sideLength, scene);
@@ -103,6 +135,8 @@ function initSkybox(skybox){
     sky.diffuseColor = new BABYLON.Color3(0, 0, 0);
     sky.specularColor = new BABYLON.Color3(0, 0, 0);
     sky.disableLighting = true;
+ 
+    skybox.layerMask = 2;
     skybox.material = sky;
     skybox.infiniteDistance = true;
     return skybox;
@@ -194,5 +228,24 @@ function cameraFollow(){
     golem.rotation.y = -4.69 - camera[0].alpha;
     camera[0].target.x = parseFloat(golem.position.x);
     camera[0].target.z = parseFloat(golem.position.z);
-    camera[0].target.y = parseFloat(golem.position.y);
+    camera[0].target.y = parseFloat(golem.position.y + 2);
 }
+function beforeRenderFunction() {
+        // Camera
+        if (camera[0].beta < 0.1)
+            camera[0].beta = 0.1;
+        else if (camera[0].beta > (Math.PI / 2) * 0.9)
+            camera[0].beta = (Math.PI / 2) * 0.9;
+
+        if (camera[0].radius > 30)
+            camera[0].radius = 30;
+
+        if (camera[0].radius < 5)
+            camera[0].radius = 5;
+    };
+    
+    function MiniMap() {
+        minimap.setTarget(golem.position);
+        minimap.position.z = camera[0].position.z;
+        minimap.position.x = camera[0].position.x; 
+    }
