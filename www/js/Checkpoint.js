@@ -1,7 +1,23 @@
-/* global BABYLON, ground, golem, scene */
-Checkpoint = function(time, countdown){
+/* global BABYLON, ground, golem, scene, engine */
+Checkpoint = function(time, cd){
+    var that = this;
     this.time = time | 180;
-    this.counter = countdown?-1:1;  //if(countdown){this.counter=-1;}else{this.counter=1;}
+    cd = cd | true;
+    this.clock = $('#clock').FlipClock(this.time, {
+            clockFace: 'MinuteCounter',
+            countdown: cd,
+            autoStart: false,
+            callbacks: {
+                interval: function(){
+                    if (that.clock.time.time===0){
+                        that.timeOut();
+                    }else{
+                        that.checkWin();
+                    }
+                    
+                }
+            }
+        });
     this.status = "stop";
     this.position = new BABYLON.Vector3(13,13,13);//this.setPosition(140);
     this.prepareMesh();
@@ -65,13 +81,7 @@ Checkpoint.prototype.startCount     = function(){
         return;
     }else if(this.status === "stop"){
         this.status = "counting";
-        this.counter = setInterval(function() {
-            this.time += this.counter;
-            if (this.time === 0){
-                this.stopCount();
-                this.timeOut();
-            }
-        }, 1000);
+        this.clock.start();
     }
 };
 
@@ -80,7 +90,8 @@ Checkpoint.prototype.stopCount      = function(){
         return;
     }else if(this.status === "counting"){
         this.status = "stop";
-        clearInterval(this.counter);
+        this.clock.stop();
+        this.time = this.clock.getTime.time+1;
     }
 };
 
@@ -90,6 +101,7 @@ Checkpoint.prototype.checkWin       = function(){
         this.stopCount();
         var timeLeft = this.time;
         console.log("HAI VINTO !");
+        engine.stopRenderLoop();
         //you win !
         return true;
     }

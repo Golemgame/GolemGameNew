@@ -8,7 +8,6 @@
             @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }  @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
             @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }           @viewport { user-zoom: fixed ; min-zoom: 100% ; }
         </style>
-
         <!--LIBS-->
         <script src="lib/babylon.2.2.js"></script>
         <script src="lib/jquery-3.0.0.min.js"></script>
@@ -19,6 +18,7 @@
         <link rel="stylesheet" href="css/flipclock.css" type="text/css">
 
         <!--SCRIPTS-->
+        <script src="lib/babylon.2.2.js"></script>
         <script src="shader/Water/waterMaterial.js"></script>
         <script src="js/randomColor.js"></script>
         <script src="js/Tree.js"></script>
@@ -30,19 +30,11 @@
         <script src="js/Checkpoint.js"></script>
         <script src="js/gameLogic.js"></script>
         <script src="js/gameScene.js"></script>
-<<<<<<< HEAD
-        <script src="js/randomColor.js"></script>
-        <script src="js/CountDown.js"></script>
-        
-        <link rel="icon" href="asset/icon.png" type="image/png">
-=======
->>>>>>> refs/remotes/origin/master
     </head>
 
     <body>
         <canvas id="renderCanvas"></canvas>
         <div id="clock"></div>
-
         <script>
             window.addEventListener('DOMContentLoaded', startingPoint());
         </script>

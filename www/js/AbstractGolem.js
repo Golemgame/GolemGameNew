@@ -2,11 +2,8 @@
 
 AbstractGolem = function(scene) {
     BABYLON.Mesh.call(this, "golem", scene);
-
     this.isVisible = false;
-
     this._children = [];
-
 };
 
 AbstractGolem.prototype = Object.create(BABYLON.Mesh.prototype);
