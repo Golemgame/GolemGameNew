@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Golem Game</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <style>
+            @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }  @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }           @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+        </style>
+        <!--LIBS-->
+        <script src="lib/babylon.2.2.js"></script>
+        <script src="lib/jquery-3.0.0.min.js"></script>
+        <script src="lib/flipclock.min.js"></script>
+
+        <!--STYLES-->
+        <link rel="stylesheet" href="css/indexStyle.css" type="text/css">
+        <link rel="stylesheet" href="css/flipclock.css" type="text/css">
+
+        <!--SCRIPTS-->
+        <script src="lib/babylon.2.2.js"></script>
+        <script src="shader/Water/waterMaterial.js"></script>
+        <script src="js/randomColor.js"></script>
+        <script src="js/Tree.js"></script>
+        <script src="js/TreeGenerator.js"></script>
+        <script src="js/EnemyGenerator.js"></script>
+        <script src="js/MapGenerator.js"></script>
+        <script src="js/AbstractGolem.js"></script>
+        <script src="js/Golem.js"></script>
+        <script src="js/Checkpoint.js"></script>
+        <script src="js/gameLogic.js"></script>
+        <script src="js/gameScene.js"></script>
+    </head>
+
+    <body>
+        <canvas id="renderCanvas"></canvas>
+        <div id="clock"></div>
+        <script>
+            window.addEventListener('DOMContentLoaded', startingPoint());
+        </script>
+    </body>
+</html>
