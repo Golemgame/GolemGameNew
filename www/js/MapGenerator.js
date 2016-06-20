@@ -19,14 +19,13 @@ MapGenerator = function (scene, tiles, tileSize) {
     }
 
     //populate map[]
-    var pippo=0;
     var rotation = [0, Math.PI*0.5, Math.PI, Math.PI*1.5];	//[0°, 90°, 180°, 270°]
     for (var x = 0; x < this.tiles; x++) {
         var rows = [];
         for (var y = 0; y < this.tiles; y++) {
-            var image = "asset/heightmaps/" + this.randomNumber(0, 11) + ".png";
-            var h = this.randomNumber(5, 37);
-            var g = BABYLON.Mesh.CreateGroundFromHeightMap("ground", image, this.tileSize, this.tileSize, this.tileSize*0.33, 0.1, h, scene, false);
+            var image = "asset/heightmaps/" + this.randomNumber(0, 11) + ".bmp";
+            var h = 13;//this.randomNumber(5, 37);
+            var g = BABYLON.Mesh.CreateGroundFromHeightMap("ground", image, this.tileSize, this.tileSize, this.tileSize*0.33, -0.5, h, scene, false);
             g.backFaceCulling = false;
             g.rotation = new BABYLON.Vector3(0, rotation[this.randomNumber(0, rotation.length - 1)], 0);	//choose a random rotation
             g.checkCollisions = true;
@@ -42,7 +41,6 @@ MapGenerator = function (scene, tiles, tileSize) {
                 }
             };
             rows.push(g);
-            pippo++;
         }
         this.map.push(rows);
     }

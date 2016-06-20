@@ -1,5 +1,6 @@
 /* global BABYLON, document, window */
 var canvas,
+<<<<<<< HEAD
         engine,
         scene,
         camera = [],
@@ -8,6 +9,16 @@ var canvas,
         ground,
         loader,
         assets = [];
+=======
+    engine,
+    scene,
+    camera  = [],
+    enemy,
+    golem,
+    ground,
+    checkpoint;
+
+>>>>>>> refs/remotes/origin/master
 
 var startingPoint = function () {
     canvas = document.getElementById('renderCanvas');
@@ -24,14 +35,19 @@ var startingPoint = function () {
 
     var tg = [], borders = [], water, skybox;
     ground.onReady = function () {
-        console.log("ground onReady execution");
         skybox = initSkybox(skybox);
         borders = initBorders(borders);
         var tiles = ground.unsortedMap();
         for (var i = 0; i < tiles.length; i++) {
             tg[i] = new TreeGenerator(tiles[i], light[2]);
         }
+<<<<<<< HEAD
         enemy = new EnemyGenerator(1, ground.sideLength);
+=======
+        enemy = new EnemyGenerator(1,ground.sideLength);
+        golem = new Golem(2);
+        checkpoint = new Checkpoint();
+>>>>>>> refs/remotes/origin/master
         water = initWater(skybox, light[0]);
     };
 
@@ -69,10 +85,14 @@ function runEngine() {
 function initScene(scene) {
     scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3(0, 1, 1);
+<<<<<<< HEAD
     scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
     scene.fogDensity = 0.01;
     scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
     //scene.workerCollisions = true;
+=======
+    scene.workerCollisions = true;  //move the collisions processing into another thread
+>>>>>>> refs/remotes/origin/master
     scene.collisionsEnabled = true;
     scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
     scene.attachControl(canvas);
@@ -87,6 +107,7 @@ function initCamera(camera) {
     camera[0].lowerRadiusLimit = 0.0001;
     // distanza max -zoom
     camera[0].upperRadiusLimit = 50;
+    camera[0].applyGravity = true;
     scene.activeCamera = camera[0];
     camera[0].attachControl(canvas);
 
@@ -186,6 +207,12 @@ function interactions() {
         enemy._enemies[i].actionManager.registerAction(action);
         //moveEnemy(golem, enemy._enemies[i]);
     }
+    checkpoint.intervalCheckWin = setInterval(function(){
+        if(checkpoint.checkWin()){
+            clearInterval(checkpoint.intervalCheckWin);
+            engine.stopRenderLoop();
+        }
+    }, 300);
 }
 function cameraFollow() {
     golem.rotation.y = -4.69 - camera[0].alpha;

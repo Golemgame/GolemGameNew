@@ -7,7 +7,7 @@ function moveEnemy(obj1, obj2) {
 
         //flee(obj2, obj1, h, 5);
         //follow(obj2, obj1, h, 3);
-        chase(obj2, obj1, h, 30, 3);
+        chase(obj2, obj1, h, 30);
 
     }, 200);
 }
@@ -33,7 +33,10 @@ function follow(obj1, obj2, h, radius) {
 
 }	//avvicina obj1 a obj2, collisions aware
 
-function chase(obj1, obj2, h, radMAX, radMIN) {
+function chase(obj1, obj2, h, radMAX) {
+    var radMIN = 0;
+    //var radMIN =    (Math.max(obj1.getBoundingInfo().boundingBox.maximum.x, obj1.getBoundingInfo().boundingBox.maximum.z) +
+    //            Math.max(obj2.getBoundingInfo().boundingBox.maximum.x, obj2.getBoundingInfo().boundingBox.maximum.z))*1.9;
     var distance = BABYLON.Vector3.Distance(obj1.position, obj2.position);
     if (distance <= radMIN) {
         return;
@@ -46,45 +49,57 @@ function chase(obj1, obj2, h, radMAX, radMIN) {
     }
 }
 
-function getGround(x,z){
+function getGround(x, z) {
     //var tiles = ground.tiles;
     var tiles = ground.map.length,
             size = ground.tileSize,
             mapX,
             mapY;
-    x += tiles/2*size;
+    x += tiles / 2 * size;
     x -= signum(x);
-    mapX = Math.floor(x/size);
-        
-    z -= tiles/2*size;
+    mapX = Math.floor(x / size);
+
+    z -= tiles / 2 * size;
     z -= signum(z);
-    mapY = Math.abs(Math.ceil(z/size)); //for negative numbers remember to invert .floor w/ .ceil and vice versa
+    mapY = Math.abs(Math.ceil(z / size)); //for negative numbers remember to invert .floor w/ .ceil and vice versa
     /*
-    if(tiles%2===0){    //even
-        if(x>0){
-            mapX = tiles/2+Math.floor(x/100);
-        }else if(x<0){
-            mapX = tiles/2+Math.floor(x/100)-1;
-        }
-        if(z>0){
-            mapY = tiles/2+Math.floor(z/100);
-        }else if(x<0){
-            mapY = tiles/2+Math.floor(z/100)-1;
-        }
-    }else if(tiles%2===1){  //odd
-        x += tiles/2*size;
-        x -= signum(x);
-        mapX = Math.floor(x/size);
-        
-        z -= tiles/2*size;
-        z += signum(z);
-        mapY = Math.floor(z/size);
-    }
-    */
+     if(tiles%2===0){    //even
+     if(x>0){
+     mapX = tiles/2+Math.floor(x/100);
+     }else if(x<0){
+     mapX = tiles/2+Math.floor(x/100)-1;
+     }
+     if(z>0){
+     mapY = tiles/2+Math.floor(z/100);
+     }else if(x<0){
+     mapY = tiles/2+Math.floor(z/100)-1;
+     }
+     }else if(tiles%2===1){  //odd
+     x += tiles/2*size;
+     x -= signum(x);
+     mapX = Math.floor(x/size);
+     
+     z -= tiles/2*size;
+     z += signum(z);
+     mapY = Math.floor(z/size);
+     }
+     */
     var row = ground.map[mapX];
     return row[mapY];
 }
 
-function signum(n){
-    return (n/Math.abs(n));
+function signum(n) {
+    return (n / Math.abs(n));
+}
+
+function randomFloat(min, max) {
+    if (min === max) {
+        return min;
+    } else {
+        return (min + ((max - min) * Math.random()));
+    }
+}
+
+function randomInt(min, max) {
+    return Math.floor(randomFloat(min, max));
 }

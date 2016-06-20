@@ -34,7 +34,6 @@ EnemyGenerator.prototype.generate = function () {
         enemy.position = this.getPosition(this.mapsize);
         enemy.position.y += enemySize*0.55;
         enemy.checkCollisions = true;
-        enemy.showBoundingBox = true;
         //enemy.ellipsoid = new BABYLON.Vector3(enemySize*0.5,enemySize*0.5,enemySize*0.5);
         enemy.applyGravity = true;
         this._enemies.push(enemy);
@@ -59,8 +58,7 @@ EnemyGenerator.prototype.getPosition = function (mapSize){
     if(a%2===1){z = safeRadius+a;}
     else if(a%2===0){z = -safeRadius-a;}
     g = getGround(x,z);
-    //y = ground.getHeightAtCoordinates(x,z);
-    y= g.getHeightAtCoordinates(x,z);
+    y = g.getHeightAtCoordinates(x,z);
     var v3 = new BABYLON.Vector3(x,y,z);
     return v3;
 };
