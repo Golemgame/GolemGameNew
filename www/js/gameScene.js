@@ -2,17 +2,19 @@
 var canvas,
     engine,
     scene,
+    loader,
+    assets = [],
     camera  = [],
     enemy,
     golem,
     ground,
     checkpoint;
 
-
 var startingPoint = function () {
     canvas = document.getElementById('renderCanvas');
     engine = new BABYLON.Engine(canvas, true);
     scene = initScene(scene);
+    loader = new BABYLON.AssetsManager(scene);
     camera = initCamera(camera);
     
     var light = [];
@@ -29,31 +31,54 @@ var startingPoint = function () {
             tg[i] = new TreeGenerator(tiles[i], light[2]);
         }
         enemy = new EnemyGenerator(1,ground.sideLength);
-        golem = new Golem(2);
+        //golem = new Golem(2);
+        loaderTasks();
         checkpoint = new Checkpoint();
         water = initWater(skybox, light[0]);
-        interactions();
+        //interactions();
     };
+};
+
+function loaderTasks() {
+
+    var golemModel = loader.addMeshTask("golem", "", "asset/golem/", "golem.babylon");
+    golemModel.onSuccess = function (t) {
+        assets[t.name] = {meshes: t.loadedMeshes, skeleton: t.loadedSkeletons};
+        golem = new Golem(assets['golem']);
+        golem.onReady = interactions();
+    };
+
+    loader.onFinish = function () {
+    //loader.onFinish = function (tasks) {
+        if (scene.isReady && golem) {
+            runEngine();
+            checkpoint.startCount();
+        }
+    };
+    loader.load();
+}
+function runEngine() {
     engine.runRenderLoop(function () {
         scene.render();
-        if (scene.isReady && golem) {
-            cameraFollow();
-            golem.move();
-        }
+        cameraFollow();
+        golem.move();
     });
-    
+
     window.addEventListener('resize', function () {
         engine.resize();
     });
-};
-
+}
 function initScene(scene){
     scene = new BABYLON.Scene(engine);
-    scene.clearColor = new BABYLON.Color3(0, 1, 1);
     scene.workerCollisions = true;  //move the collisions processing into another thread
     scene.collisionsEnabled = true;
-    scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
     scene.attachControl(canvas);
+    
+    scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
+    scene.clearColor = new BABYLON.Color3(0, 1, 1);
+    scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+    scene.fogDensity = 0.01;
+    scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
     return scene;
 }
 function initCamera(camera){
@@ -64,7 +89,7 @@ function initCamera(camera){
     camera[0].lowerRadiusLimit = 0.0001;
     // distanza max -zoom
     camera[0].upperRadiusLimit = 50;
-    camera[0].applyGravity = true;
+    //camera[0].applyGravity = true;
     scene.activeCamera = camera[0];
     camera[0].attachControl(canvas);
     return camera;
@@ -161,14 +186,9 @@ function interactions(){
     for(var i=0; i<enemy._enemies.length; i++){
         enemy._enemies[i].actionManager = new BABYLON.ActionManager(scene);
         enemy._enemies[i].actionManager.registerAction(action);
-        executeAsync(golem, enemy._enemies[i]);
+        console.log("movimento impostato per il nemico numero:"+i);
+        moveEnemy(golem, enemy._enemies[i]);
     }
-    checkpoint.intervalCheckWin = setInterval(function(){
-        if(checkpoint.checkWin()){
-            clearInterval(checkpoint.intervalCheckWin);
-            engine.stopRenderLoop();
-        }
-    }, 300);
 }
 function cameraFollow(){
     golem.rotation.y = -4.69 - camera[0].alpha;

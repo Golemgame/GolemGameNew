@@ -1,6 +1,6 @@
 /* global BABYLON, ground */
 
-function executeAsync(obj1, obj2) {
+function moveEnemy(obj1, obj2) {
     setInterval(function () {
         var g = getGround(obj2.position.x, obj2.position.z);
         var h = g.getHeightAtCoordinates(obj2.position.x, obj2.position.z);
@@ -34,9 +34,9 @@ function follow(obj1, obj2, h, radius) {
 }	//avvicina obj1 a obj2, collisions aware
 
 function chase(obj1, obj2, h, radMAX) {
-    var radMIN = 0;
-    //var radMIN =    (Math.max(obj1.getBoundingInfo().boundingBox.maximum.x, obj1.getBoundingInfo().boundingBox.maximum.z) +
-    //            Math.max(obj2.getBoundingInfo().boundingBox.maximum.x, obj2.getBoundingInfo().boundingBox.maximum.z))*1.9;
+    //var radMIN = 0;
+    var radMIN =    (Math.max(obj1.getBoundingInfo().boundingBox.maximum.x, obj1.getBoundingInfo().boundingBox.maximum.z) +
+                Math.max(obj2.getBoundingInfo().boundingBox.maximum.x, obj2.getBoundingInfo().boundingBox.maximum.z))*1.9;
     var distance = BABYLON.Vector3.Distance(obj1.position, obj2.position);
     if (distance <= radMIN) {
         return;
@@ -62,28 +62,6 @@ function getGround(x, z) {
     z -= tiles / 2 * size;
     z -= signum(z);
     mapY = Math.abs(Math.ceil(z / size)); //for negative numbers remember to invert .floor w/ .ceil and vice versa
-    /*
-     if(tiles%2===0){    //even
-     if(x>0){
-     mapX = tiles/2+Math.floor(x/100);
-     }else if(x<0){
-     mapX = tiles/2+Math.floor(x/100)-1;
-     }
-     if(z>0){
-     mapY = tiles/2+Math.floor(z/100);
-     }else if(x<0){
-     mapY = tiles/2+Math.floor(z/100)-1;
-     }
-     }else if(tiles%2===1){  //odd
-     x += tiles/2*size;
-     x -= signum(x);
-     mapX = Math.floor(x/size);
-     
-     z -= tiles/2*size;
-     z += signum(z);
-     mapY = Math.floor(z/size);
-     }
-     */
     var row = ground.map[mapX];
     return row[mapY];
 }

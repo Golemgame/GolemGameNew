@@ -27,6 +27,7 @@ MapGenerator = function (scene, tiles, tileSize) {
             var h = 13;//this.randomNumber(5, 37);
             var g = BABYLON.Mesh.CreateGroundFromHeightMap("ground", image, this.tileSize, this.tileSize, this.tileSize*0.33, -0.5, h, scene, false);
             g.backFaceCulling = false;
+            //g.disableLighting = true;
             g.rotation = new BABYLON.Vector3(0, rotation[this.randomNumber(0, rotation.length - 1)], 0);	//choose a random rotation
             g.checkCollisions = true;
             g.position = this.givePosition(this.tiles, x, y);
