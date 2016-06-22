@@ -6,6 +6,7 @@ var canvas,
         assets = [],
         camera = [],
         enemy,
+        enemyMotion = [],
         golem,
         ground,
         checkpoint,
@@ -221,7 +222,7 @@ function interactions() {
         enemy._enemies[i].actionManager = new BABYLON.ActionManager(scene);
         enemy._enemies[i].actionManager.registerAction(action);
         console.log("movimento impostato per il nemico numero:" + i);
-        moveEnemy(golem, enemy._enemies[i]);
+        enemyMotion[i] = moveEnemy(golem, enemy._enemies[i]);
     }
 }
 function cameraFollow() {

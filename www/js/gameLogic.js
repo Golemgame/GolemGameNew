@@ -1,15 +1,16 @@
-/* global BABYLON, ground */
+/* global BABYLON, ground, enemy, enemyMotion, engine, golem */
 
 function moveEnemy(obj1, obj2) {
-    setInterval(function () {
+    var interval = setInterval(function () {
         var g = getGround(obj2.position.x, obj2.position.z);
         var h = g.getHeightAtCoordinates(obj2.position.x, obj2.position.z);
 
         //flee(obj2, obj1, h, 5);
         //follow(obj2, obj1, h, 3);
         chase(obj2, obj1, h, 30);
-
+        checkDead();
     }, 200);
+    return interval;
 }
 
 function flee(obj1, obj2, h, radius) {
@@ -64,6 +65,44 @@ function getGround(x, z) {
     mapY = Math.abs(Math.ceil(z / size)); //for negative numbers remember to invert .floor w/ .ceil and vice versa
     var row = ground.map[mapX];
     return row[mapY];
+}
+
+function checkDead(){
+    if(golem.dead){
+        stopGame("lose");
+    }
+}
+
+function stopEnemies(){
+    for (var i = 0; i < enemy._enemies.length; i++) {
+        enemy._enemies[i].actionManager = null;
+        clearInterval(enemyMotion[i]);
+    }
+}
+
+function stopGame(why){
+    stopEnemies();
+    engine.stopRenderLoop();
+    $("#renderCanvas").css("visibility", "hidden");
+    $("#clock").css("visibility", "hidden");
+    $("#gameOver").css("visibility", "visible");
+    
+    switch (why){
+        case "win":
+            $("#gameOver").addClass("win");
+            break;
+        case "timeOut":
+            $("#gameOver").addClass("timeOut");
+            break;
+        case "lose":
+            $("#gameOver").addClass("lose");
+            break;
+    }
+    
+    $("#gameOver").addClass("bounceInUp animated").one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+            function () {
+                $(this).removeClass("bounceInUp animated");
+            });
 }
 
 function signum(n) {

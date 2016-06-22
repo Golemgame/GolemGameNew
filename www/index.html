@@ -9,11 +9,11 @@
     <script src="js/mainPage.js"></script>
     <link href="css/MainPage.css" rel="stylesheet" />
 </head>
-<body style="cursor: url(asset/ACP_MouseCursor.cur), default !important; " class="ief-right ief-top">
+<body style="cursor: url(asset/ACP_MouseCursor.cur), default !important; ">
     <div id="pageMain"  >
-        <div id="lbHeader">
-            <div class="" id="diffScreenHeader" style="display: none;">
-                <div id="lbBackButton" ></div>
+        <div id="mainHeader" class="lbHeader">
+            <div id="diffScreenHeader" style="display: none;">
+                <div id="mainBackButton" class="lbBackButton" ></div>
                 <div class="lbLine"></div>
                 <div class="lbTitleText diffTittleText langit"></div>
             </div>
@@ -33,8 +33,8 @@
         </div>
     </div>
     <div style="display: none;" id="pageLeaderboard">
-        <div id="lbHeader">
-            <div id="lbBackButton" class="buttonWithSound"></div>
+        <div class="lbHeader">
+            <div class="lbBackButton"></div>
             <div class="lbLine"></div>
             <div style="position: absolute; left: 491px;" class="lbTitleText langit">CLASSIFICHE</div>
         </div>
@@ -45,10 +45,10 @@
         </div>
         <div id="lbScoresContainer">
             <div id="endRaceScoreContainer">
-                <div class="scoreListElemet" style="margin-top: 2%;">
+                <div style="margin-top: 2%;">
                     <div id="slePosition"></div>
                     <div id="sleUserAvatar"></div>
-                    <div type="text" id="sleUserName" disabled=""></div>
+                    <div id="sleUserName"></div>
                     <div id="sleUserTime"></div>
                 </div>
             </div>
@@ -56,12 +56,9 @@
         <div id="lbContainerButtons">
            <div id="endRaceButtonContainer">
                 <div id="endRaceButtonMainMenu" class="endRaceButton"> MENU PRINCIPALE </div>
-                <div id="endRaceButtonReplay" class="endRaceButton"> GIOCA DEMO
-                  
-                </div>  
+                <div id="endRaceButtonReplay" class="endRaceButton"> GIOCA DEMO </div>
            </div>
         </div>
-        
  </div>   
 </body>
 </html>
