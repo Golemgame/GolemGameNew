@@ -1,0 +1,286 @@
+﻿body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+    font-family: "AC3_AbstergoSans" !important;
+
+    background-image: url('../images/5.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow: hidden;
+}
+.lbHeader {
+    height: 8vw;
+    width: 100vw;
+    background-image: url('../asset/linea_header.png');
+    background-repeat: repeat-x;
+    background-size: contain;
+    top: 0;
+    position: absolute;
+    display: inline-block;
+}
+div#diffScreenHeader div.lbBackButton {
+    position: absolute;
+}
+.lbBackButton {
+    height: 3vw;
+    width: 9vw;
+    background-image: url('../asset/lbBackButton.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 6%;
+    left: 0.4%;
+}
+div#diffScreenHeader div.lbLine {
+    margin-top: -1%;
+}
+.lbLine {
+    height: 6vw;
+    background-image: url('../asset/linea.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 2.5%;
+    width: 90%;
+    margin-top: -3.5%;
+    margin-left: 8.5%;
+}
+div#diffScreenHeader div.diffTittleText {
+    max-width: 15.7vw !important;
+    margin-left: 42%;
+    width: 0 !important;
+}
+.langit {
+    max-width: 17.5vw !important;
+}
+.lbTitleText {
+    color: white;
+    background-color: black;
+    position: relative;
+    height: 3vw;
+    font-size: 3vw;
+    margin-top: -4.5%;
+    text-align: center;
+    width: 19vw;
+    margin-left: 39%;
+    overflow: visible;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+div#MainMenuContainer {
+    position: absolute;
+    top: 58%;
+    height: 12.5vw;
+    width: 100%;
+    color: white;
+    font-size: 2.1vw;
+    text-align: center;
+}
+div#MainMenuContainer div {
+    height: 3.69792vw;
+    max-width: 53.334vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0.46875vw;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.buttonBackgroung {
+    background-image: url('../asset/butttonBackground.png');
+}
+div#MainMenuContainer {
+    color: white;
+    font-size: 2.1vw;
+    text-align: center;
+}
+div#MainMenuContainer div {
+    height: 3.69792vw;
+    max-width: 53.334vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0.46875vw;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+div#difficultyLevel {
+    position: absolute;
+    top: 53%;
+    height: 20vw;
+    width: 100%;
+    color: white;
+    font-size: 2.1vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+div#difficultyLevel div:first-child {
+    height: 5vw;
+    font-size: 3vw;
+}
+div#difficultyLevel div:not(:first-child) {
+    height: 4.5vw;
+    max-width: 53.334vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0.46875vw;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#lbHeader {
+    height: 8vw;
+    width: 100vw;
+    background-image: url('../asset/linea_header.png');
+    background-repeat: repeat-x;
+    background-size: contain;
+    top: 0;
+    position: absolute;
+    display: inline-block;
+}
+.lbLine {
+    height: 6vw;
+    background-image: url('../asset/linea.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 2.5%;
+    width: 90%;
+    margin-top: -3.5%;
+    margin-left: 8.5%;
+}
+div#pageLeaderboard div.lbTitleText {
+    margin-left: 0 !important;
+}
+.langit {
+    max-width: 17.5vw !important;
+}
+.lbTitleText {
+    color: white;
+    background-color: black;
+    position: relative;
+    height: 3vw;
+    font-size: 3vw;
+    margin-top: -4.5%;
+    text-align: center;
+    width: 19vw;
+    margin-left: 39%;
+    overflow: visible;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#lbPeriodContainer {
+    top: 18%;
+    position: absolute;
+    width: 46.875vw;
+    height: 4.5vh;
+    left: 26.5625vw;
+    background-image: url('../asset/sf_liv.png');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 100% 80%;
+}
+#lbScoresContainer {
+    position: absolute;
+    top: 28%;
+    left: 20.417%;
+    height: 450px;
+    width: 900px;
+    left: 28%;
+}
+div#lbScoresContainer div#endRaceScoreContainer {
+    background-size: 94% 0.3%;
+    margin-right: 3%;
+}
+#endRaceScoreContainer {
+    font-size: 1.5vw;
+    color: white;
+    background-image: url('../asset/ok.png');
+    background-repeat: no-repeat;
+    background-position: 130% 0%;
+    background-size: 94% 1%;
+}
+div#lbContainerButtons div#endRaceButtonContainer {
+    top: 85%;
+    width: 50%;
+    left: 35%;
+    font-size: 28pt;
+}
+#endRaceButtonContainer {
+    top: 87.5%;
+    position: absolute;
+    width: 100%;
+    left: 5.283%;
+}
+#lbEasy, #lbMedium, #lbHard {
+    height: 4.5vh;
+    width: 15.625vw;
+    color: white;
+    font-size: 1.3vw;
+    text-align: center;
+    float: left;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.lbSelected {
+    background-image: url('../asset/sf.png');
+    background-repeat: no-repeat !important;
+    background-size: 100% 80% !important;
+}
+
+div#lbContainerButtons div#endRaceButtonContainer div.endRaceButton {
+    padding-top: 1.5%;
+}
+.endRaceButton {
+    background-image: url('../asset/kkk.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 3.3334vw;
+    width: 13.3334vw;
+    float: left;
+    margin-right: 5.283%;
+    padding-top: 1%;
+    color: white;
+    text-align: center;
+    font-size: 1.3vw;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

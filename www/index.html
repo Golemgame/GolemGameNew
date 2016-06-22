@@ -1,32 +1,64 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="icon" href="favicon/favicon.png" type="image/png" />
-        <title>Golem Game</title>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
-        <style>
-            @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }  @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
-            @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }           @viewport { user-zoom: fixed ; min-zoom: 100% ; }
-        </style>
-        <link rel="stylesheet" href="css/indexStyle.css" type="text/css">
-        <script src="lib/babylon.2.2.js"></script>
-        <script src="shader/Water/waterMaterial.js"></script>
-        <script src="js/randomColor.js"></script>
-        <script src="js/Tree.js"></script>
-        <script src="js/TreeGenerator.js"></script>
-        <script src="js/EnemyGenerator.js"></script>
-        <script src="js/MapGenerator.js"></script>
-        <script src="js/Golem.js"></script>
-        <script src="js/Checkpoint.js"></script>
-        <script src="js/gameLogic.js"></script>
-        <script src="js/gameScene.js"></script>
-    </head>
-
-    <body>
-        <canvas id="renderCanvas"></canvas>
-        <script>
-            window.addEventListener('DOMContentLoaded', startingPoint());
-        </script>
-    </body>
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Main Page Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <link href="css/ACPanimations.css" rel="stylesheet" />
+    <script src="js/mainPage.js"></script>
+    <link href="css/MainPage.css" rel="stylesheet" />
+</head>
+<body style="cursor: url(asset/ACP_MouseCursor.cur), default !important; ">
+    <div id="pageMain"  >
+        <div id="mainHeader" class="lbHeader">
+            <div id="diffScreenHeader" style="display: none;">
+                <div id="mainBackButton" class="lbBackButton" ></div>
+                <div class="lbLine"></div>
+                <div class="lbTitleText diffTittleText langit"></div>
+            </div>
+        </div>
+        <div id="MainMenuContainer">
+            <div id="playBtn" class="buttonBackgroung"> PLAY GAME</div>
+            <div id="leaderboardBtn" class="buttonBackgroung"> SCORE  </div>
+            <div id="learnBtn" class="buttonBackgroung"> LEARN </div>
+        </div>
+        <div id="difficultyLevel" style="display: none">
+            <div id="diffLabel"></div>
+            <div id="diff_Easy" class="buttonBackgroung"> 
+                <a href="game.html"> Principiante  </a>
+            </div>
+            <div id="diff_Medium" class="buttonBackgroung"> Medio </div>
+            <div id="diff_Hard" class="buttonBackgroung"> Difficile </div>
+        </div>
+    </div>
+    <div style="display: none;" id="pageLeaderboard">
+        <div class="lbHeader">
+            <div class="lbBackButton"></div>
+            <div class="lbLine"></div>
+            <div style="position: absolute; left: 491px;" class="lbTitleText langit">CLASSIFICHE</div>
+        </div>
+        <div id="lbPeriodContainer">
+            <div id="lbEasy" class="lbSelected">Principiante</div>
+            <div id="lbMedium" >Medio</div>
+            <div id="lbHard" >Difficile</div>
+        </div>
+        <div id="lbScoresContainer">
+            <div id="endRaceScoreContainer">
+                <div style="margin-top: 2%;">
+                    <div id="slePosition"></div>
+                    <div id="sleUserAvatar"></div>
+                    <div id="sleUserName"></div>
+                    <div id="sleUserTime"></div>
+                </div>
+            </div>
+        </div>
+        <div id="lbContainerButtons">
+           <div id="endRaceButtonContainer">
+                <div id="endRaceButtonMainMenu" class="endRaceButton"> MENU PRINCIPALE </div>
+                <div id="endRaceButtonReplay" class="endRaceButton"> GIOCA DEMO </div>
+           </div>
+        </div>
+ </div>   
+</body>
 </html>

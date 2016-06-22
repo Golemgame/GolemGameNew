@@ -1,15 +1,16 @@
-/* global BABYLON, ground */
+/* global BABYLON, ground, enemy, enemyMotion, engine, golem */
 
-function executeAsync(obj1, obj2) {
-    setInterval(function () {
+function moveEnemy(obj1, obj2) {
+    var interval = setInterval(function () {
         var g = getGround(obj2.position.x, obj2.position.z);
         var h = g.getHeightAtCoordinates(obj2.position.x, obj2.position.z);
 
         //flee(obj2, obj1, h, 5);
         //follow(obj2, obj1, h, 3);
         chase(obj2, obj1, h, 30);
-
+        checkDead();
     }, 200);
+    return interval;
 }
 
 function flee(obj1, obj2, h, radius) {
@@ -34,9 +35,9 @@ function follow(obj1, obj2, h, radius) {
 }	//avvicina obj1 a obj2, collisions aware
 
 function chase(obj1, obj2, h, radMAX) {
-    var radMIN = 0;
-    //var radMIN =    (Math.max(obj1.getBoundingInfo().boundingBox.maximum.x, obj1.getBoundingInfo().boundingBox.maximum.z) +
-    //            Math.max(obj2.getBoundingInfo().boundingBox.maximum.x, obj2.getBoundingInfo().boundingBox.maximum.z))*1.9;
+    //var radMIN = 0;
+    var radMIN =    (Math.max(obj1.getBoundingInfo().boundingBox.maximum.x, obj1.getBoundingInfo().boundingBox.maximum.z) +
+                Math.max(obj2.getBoundingInfo().boundingBox.maximum.x, obj2.getBoundingInfo().boundingBox.maximum.z))*1.9;
     var distance = BABYLON.Vector3.Distance(obj1.position, obj2.position);
     if (distance <= radMIN) {
         return;
@@ -62,30 +63,46 @@ function getGround(x, z) {
     z -= tiles / 2 * size;
     z -= signum(z);
     mapY = Math.abs(Math.ceil(z / size)); //for negative numbers remember to invert .floor w/ .ceil and vice versa
-    /*
-     if(tiles%2===0){    //even
-     if(x>0){
-     mapX = tiles/2+Math.floor(x/100);
-     }else if(x<0){
-     mapX = tiles/2+Math.floor(x/100)-1;
-     }
-     if(z>0){
-     mapY = tiles/2+Math.floor(z/100);
-     }else if(x<0){
-     mapY = tiles/2+Math.floor(z/100)-1;
-     }
-     }else if(tiles%2===1){  //odd
-     x += tiles/2*size;
-     x -= signum(x);
-     mapX = Math.floor(x/size);
-     
-     z -= tiles/2*size;
-     z += signum(z);
-     mapY = Math.floor(z/size);
-     }
-     */
     var row = ground.map[mapX];
     return row[mapY];
+}
+
+function checkDead(){
+    if(golem.dead){
+        stopGame("lose");
+    }
+}
+
+function stopEnemies(){
+    for (var i = 0; i < enemy._enemies.length; i++) {
+        enemy._enemies[i].actionManager = null;
+        clearInterval(enemyMotion[i]);
+    }
+}
+
+function stopGame(why){
+    stopEnemies();
+    engine.stopRenderLoop();
+    $("#renderCanvas").css("visibility", "hidden");
+    $("#clock").css("visibility", "hidden");
+    $("#gameOver").css("visibility", "visible");
+    
+    switch (why){
+        case "win":
+            $("#gameOver").addClass("win");
+            break;
+        case "timeOut":
+            $("#gameOver").addClass("timeOut");
+            break;
+        case "lose":
+            $("#gameOver").addClass("lose");
+            break;
+    }
+    
+    $("#gameOver").addClass("bounceInUp animated").one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+            function () {
+                $(this).removeClass("bounceInUp animated");
+            });
 }
 
 function signum(n) {
