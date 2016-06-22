@@ -10,7 +10,8 @@
   },
   "build-tab": {
     "selectedTargets": [
-      "WEB_CHROME"
+      "WEB_CHROME",
+      "WEB_WEBAPP"
     ]
   }
 }
