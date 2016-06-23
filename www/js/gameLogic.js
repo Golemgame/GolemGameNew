@@ -35,18 +35,16 @@ function follow(obj1, obj2, h, radius) {
 }	//avvicina obj1 a obj2, collisions aware
 
 function chase(obj1, obj2, h, radMAX) {
-    //var radMIN = 0;
-    var radMIN =    (Math.max(obj1.getBoundingInfo().boundingBox.maximum.x, obj1.getBoundingInfo().boundingBox.maximum.z) +
-                Math.max(obj2.getBoundingInfo().boundingBox.maximum.x, obj2.getBoundingInfo().boundingBox.maximum.z))*1.9;
+    var radMIN = 0;
     var distance = BABYLON.Vector3.Distance(obj1.position, obj2.position);
     if (distance <= radMIN) {
         return;
     }
     if (distance < radMAX) {
         var diffX = parseFloat(obj1.position.x - obj2.position.x);
-        var diffY = parseFloat(h - obj1.position.y);
+        var diffY = parseFloat(obj1.position.y - h);
         var diffZ = parseFloat(obj1.position.z - obj2.position.z);
-        obj1.moveWithCollisions(new BABYLON.Vector3(diffX, -diffY, diffZ).normalize().negate().scale(1.5));
+        obj1.moveWithCollisions(new BABYLON.Vector3(diffX, diffY, diffZ).normalize().negate().scale(1.5));
     }
 }
 
